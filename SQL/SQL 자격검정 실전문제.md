@@ -80,7 +80,7 @@
     - 유일성
     - 최소성
     - 불변성
-    - 존재성
+    - 존재성: Null값 X
 
 ## SQL 기본
 
@@ -154,4 +154,69 @@
 
     Dependent: 부모에 PK가 존재할 때만 자식 입력 허용
 
-    
+23. Truncate, Drop -> 로그를 남기지 않음
+24. DISTINCT: 데이터 중복 제거
+
+28. Dirty Read: 다른 트랜잭션에 의해 수정되었지만 아직 커밋되지 않은 데이터를 읽음
+
+    Non-Repeatable Read:한 트랜잭션 내에서 같은 쿼리를 두번 수행 했는데, 그 사이에 다른 트랜잭션이 값을 수정 또는 삭제하는 바람에 두 쿼리의 결과가 다르게 나타나는 현상
+
+    Phantom Read: 한 트랜잭션 내에서 같은 쿼리를 두 번 수행했는데, 첫 번재 쿼리에서 없던 유령 레코드가 두번째 쿼리에서 나타나는 현상
+
+29. 오라클: DDL 문장 수행 후 자동으로 commit 수행, DDL 실행 후 트랜젝션 종료
+
+    SQL Serve: DDL 수행 후 자동 commit 수행X
+
+37. Insert into 서비스 Values('999', '', '2015-11-11');
+
+    '': 공백 데이터 삽입
+
+    SQL Server에서 조회 가능( ''로 찾으면 됨)
+
+    Oracle에서 is null 조건으로 조회
+
+41. Length: 문자열 길이
+
+    Replace(C1, CHR(10)): C1을 CHR(10) -> 줄바꿈제거로 치환
+
+    CHR: 주어진 아스키코드에 대한 문자를 반환 -> CHR(10): 줄바꿈
+
+    Concat: 문자열1과 문자열 2 연결 (||, +와 같음)
+
+    Substr/Substring(문자열, m, n): 문자열 중 m 위치에서  n개의 문자 길이에 해당하는 문자를 돌려줌
+
+    Ltrim(문자열, 지정문자): 문자열의 첫 문자부터 확인해서 지정문자가 나타나면 해당 문자 제거 -> SQL Server는 지정 문자 사용x(공백만 제거)
+
+    Rtrim: 문자열 마지막 부터 확ㅇ니하여 지정문자가 나타나는 동안 해당 문자 제거
+
+    Trim(leading || trailing || both 지정문자 From 문자열): 문자열에서 지정 문자 제거
+
+42. 1/24/60 = 1분
+
+    1/24/(60/10) = 10분 
+
+43. searched -> simple
+
+    case when loc = 'new york' then 'east' -> case loc when 'new york' then 'east'
+
+46. NULLIF(EXPR1, EXPR2): EXPR1 == EXPR2이면 NULL, 같지 않으면 EXPR1을 RETURN
+
+    NVL(EXPR1, EXPR2) / ISNULL(EXPR1, EPXR2): EXPR1 == NULL이면 EPXR2의 값을 출력
+
+    COLAESCE(EXPR1, EXPR2): NULL이 아닌 최초의 표현식을 나타냄, 모든 표현식이 NULL이면 NULL리턴
+
+47. NULL이 포함된 연산 결과는 NULL 출력
+
+48. COALESCE: NULL이 아닌 첫번째 값
+
+51. NULL은 COUNT에서 제외됨
+
+53. GROUP BY에서 HAVING절 사용: FILTER 역할
+
+    중첩된 그룹 함수 -> 최종 결과값은 1건
+
+58. CASE를 이용해 순서 정렬 -> A 우선
+59. SELECT 실행 순서: FROM - WHERE - GROUP BY - HAVING - SELECT - ORDER BY
+60. 동일한 결과값 함께 출력: WITH TIES
+61. 여러 테이블 중 원하는 데이터 조회: N-1개의 JOIN 조건 필요
+
