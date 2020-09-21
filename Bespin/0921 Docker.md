@@ -22,7 +22,7 @@
 
   - 여러 단계를 거쳐야 하는데, 서버의 상태가 계속 바뀜
 
-  ![image-20200921091823517](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921091823517.png)
+  ![image-20200921091823517](C:./typora-user-images/image-20200921091823517.png)
 
   - 배포 과정
 
