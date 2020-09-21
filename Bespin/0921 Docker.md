@@ -28,7 +28,7 @@
 
     > 하나의 서버에 여러 개의 Applictaion 
 
-    ![image-20200921091902218](./typora-user-images/\image-20200921091902218.png)
+    ![image-20200921091902218](./typora-user-images/image-20200921091902218.png)
 
     [D] 라는 새로운 Application 추가
 
@@ -65,7 +65,7 @@
 
 - 오토 스케일링
 
-  ![image-20200921092742258](./typora-user-images/\image-20200921092742258.png)
+  ![image-20200921092742258](./typora-user-images/image-20200921092742258.png)
 
   > 원하는 만큼만 인스턴스 사용
 
@@ -95,7 +95,7 @@ ex) chef, puppet, ansible
   >
   > 같은 명령어
 
-  ![image-20200921093340282](./typora-user-images/\image-20200921093340282.png)
+  ![image-20200921093340282](./typora-user-images/image-20200921093340282.png)
 
   > Infrastructure의 코드화: Git
 
