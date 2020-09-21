@@ -38,7 +38,7 @@
 
   > 배포된 애플리케이션이 동작 가능한 **상태** 유지
   
-  ![image-20200921092030456](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921092030456.png)
+  ![image-20200921092030456](C:.\typora-user-images\image-20200921092030456.png)
   
   - 서버 운영이 어려운 이유
     1. 고유한 네트워크 환경, 하드웨어 파편화
