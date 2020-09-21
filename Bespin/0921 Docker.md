@@ -57,7 +57,7 @@
 
 - 이미지화 & 스케일 인/아웃
 
-  ![image-20200921092651048]./typora-user-images/image-20200921092651048.png)
+  ![image-20200921092651048](./typora-user-images/image-20200921092651048.png)
 
   > 하나의 앱을 여러개의 Instance로
   >
@@ -79,7 +79,7 @@
 
 ###### 결론
 
-![image-20200921093112432]./typora-user-images/image-20200921093112432.png)
+![image-20200921093112432](./typora-user-images/image-20200921093112432.png)
 
 > 리눅스로 명령어를 운영해야 하는 것은 여전함
 
