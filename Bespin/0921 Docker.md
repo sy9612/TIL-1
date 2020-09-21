@@ -229,3 +229,95 @@ ID: ubuntu
 PW: apple-kiwi-apple
 
 > 실제 외부 서버에 접속하는 것은 아님
+
+redis: 저장소
+
+---
+
+php 사용
+
+- docker run -it -v $(pwd)/content:/tmp php:7 /bin/bash
+
+  > php가 깔려있지 않아도 연결하여서 실행
+  >
+  > -v 옵션을 통해 host와 image의 폴더 연결
+
+### Image
+
+- Docker
+
+  > 레이어드 파일 시스템 기반 ex) AUFS, BTRFS, Overlayfs, ...
+
+- Image
+
+  > 프로세스가 실행되는 파일들의 집합(환경)
+  >
+  > 프로세스: 환경(파일)을 변경할 수 있음 (휘발됨)
+  >
+  >  --> 환경을 저장해 새로운 이미지 생성
+
+  ![image-20200921152809513](./typora-user-images/image-20200921152809513.png)
+
+  - git이 설치된 image 구성
+
+  > 바뀐게 없으면 계속 사용 가능
+
+#### Dockerfile
+
+>  docker 이미지 생성을 위한 dsl
+
+```
+ROM nacyot/ruby-ruby:latest
+RUN apt-get update
+RUN apt-get install -qq -y libsqlite3-dev nodejs
+RUN gem install foreman compass
+WORKDIR /app
+RUN git clone https://github.com/nacyot/docker-sample-project.git /app
+RUN git checkout v0.1
+RUN bundle install --without development test
+ENV SECRET_KEY_BASE hellodocker
+ENV RAILS_ENV production
+EXPOSE 3000
+CMD foreman start -f Procfile
+```
+
+- #: 주석
+
+- FROM: 베이스 이미지 지정
+
+- ADD <추가할 파일> <파일 경로>
+
+  --> COPY를 더 많이 사용
+
+- RUN <명령어>
+
+  run apt-get install -y git
+
+  --> -y: 모두 y를 선택
+
+- WORKDIR <디렉터리>: 작업 디렉터리 변경
+
+#### Docker build
+
+> docker build -t 이름공간/이미지이름:태그 .
+>
+> > docker build -t nacyot/ubuntu:git .
+
+- .dockerignore
+
+  .gitignore과 비슷한 역할
+
+  지정된 패턴의 파일 무시
+
+```
+FROM ruby:2.6
+COPY Gemfile* /usr/src/app/
+#Gemfile을 먼저 복사함
+WORKDIR /usr/src/app
+RUN bundle install
+COPY . /usr/src/app
+EXPOSE 4567
+CMD bundle exec ruby app.rb -o 0.0.0.0
+```
+
+> Gemfile이 바뀌지 않는 한 build가 깨지지 않음 (캐쉬최적화)
