@@ -28,7 +28,7 @@
 
     > 하나의 서버에 여러 개의 Applictaion 
 
-    ![image-20200921091902218](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921091902218.png)
+    ![image-20200921091902218](./typora-user-images/\image-20200921091902218.png)
 
     [D] 라는 새로운 Application 추가
 
@@ -38,7 +38,7 @@
 
   > 배포된 애플리케이션이 동작 가능한 **상태** 유지
   
-  ![image-20200921092030456](C:.\typora-user-images\image-20200921092030456.png)
+  ![image-20200921092030456](./typora-user-images/image-20200921092030456.png)
   
   - 서버 운영이 어려운 이유
     1. 고유한 네트워크 환경, 하드웨어 파편화
@@ -57,7 +57,7 @@
 
 - 이미지화 & 스케일 인/아웃
 
-  ![image-20200921092651048](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921092651048.png)
+  ![image-20200921092651048]./typora-user-images/image-20200921092651048.png)
 
   > 하나의 앱을 여러개의 Instance로
   >
@@ -65,7 +65,7 @@
 
 - 오토 스케일링
 
-  ![image-20200921092742258](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921092742258.png)
+  ![image-20200921092742258](./typora-user-images/\image-20200921092742258.png)
 
   > 원하는 만큼만 인스턴스 사용
 
@@ -79,7 +79,7 @@
 
 ###### 결론
 
-![image-20200921093112432](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921093112432.png)
+![image-20200921093112432]./typora-user-images/image-20200921093112432.png)
 
 > 리눅스로 명령어를 운영해야 하는 것은 여전함
 
@@ -95,11 +95,11 @@ ex) chef, puppet, ansible
   >
   > 같은 명령어
 
-  ![image-20200921093340282](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921093340282.png)
+  ![image-20200921093340282](./typora-user-images/\image-20200921093340282.png)
 
   > Infrastructure의 코드화: Git
 
-  ![image-20200921093445445](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921093445445.png)
+  ![image-20200921093445445](./typora-user-images/image-20200921093445445.png)
 
   - 기존 CMD와 다르게 Chef Cookbook을 통해 상태 관리
 
@@ -128,7 +128,7 @@ ex) Heroku: Dyno 단위에 App을 올리면 배포 가능
 
 - 배포 단순화
 
-  ![image-20200921094120507](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921094120507.png)
+  ![image-20200921094120507](./typora-user-images/image-20200921094120507.png)
 
 - 결론
 
@@ -174,25 +174,25 @@ ex) Heroku: Dyno 단위에 App을 올리면 배포 가능
 
 - busybox: 다른 환경에서 돌아감
 
-![image-20200921094843343](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921094843343.png)
+![image-20200921094843343](./typora-user-images/image-20200921094843343.png)
 
 > 실행 환경이 바뀜
 
 - 가상 머신과의 차이
 
-  ![image-20200921094914914](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921094914914.png)
+  ![image-20200921094914914](./typora-user-images/image-20200921094914914.png)
 
   - Docker: Kernel을 공유
 
 - 프로세스 실행 환경 분리
 
-  ![image-20200921095036890](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921095036890.png)
+  ![image-20200921095036890](./typora-user-images/image-20200921095036890.png)
 
 - 계층화된 저장장치(AUFS)
 
 - 이미지(App이 돌아가는 환경) 공유
 
-  ![image-20200921101217443](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20200921101217443.png)
+  ![image-20200921101217443](./typora-user-images/image-20200921101217443.png)
 
   > 배포 환경 설정
 
