@@ -321,3 +321,55 @@ CMD bundle exec ruby app.rb -o 0.0.0.0
 ```
 
 > Gemfile이 바뀌지 않는 한 build가 깨지지 않음 (캐쉬최적화)
+
+##### 멀티 스테이지 빌드
+
+- 기존 Dockerfile
+
+  FROM이 하나만 존재
+
+- 멀티 스테이지 빌드
+
+  ```dockerfile
+  FROM maven:3-jdk-8-slim as build #작업한 내용은 build에 저장
+  COPY . /app
+  WORKDIR /app
+  RUN mvn package
+  #만들어진 jar 파일 저장
+  FROM adoptopenjdk/openjdk8:alpine
+  COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar /app.jar
+  #build에서 파일을 가져옴
+  #가져온 jar 파일 실행
+  CMD ["java","-Djava.security.egd=file:/dev/./urandom", "-jar","/app.jar
+  "]
+  ```
+
+  > FROM이 두 개 이상 존재
+  >
+  > 빌드를 효과적으로 구현
+  >
+  > 시간, 용량 단축
+
+##### 환경 변수
+
+- 기본 사이즈 설정
+
+  ```sh
+  #!/bin/sh
+  POST_MAX_SIZE=${POST_MAX_SIZE:-"32M"} #default = 32M
+  sed -e "s/post_max_size = 8M/post_max_size = ${POST_MAX_SIZE}/" \
+   -i /usr/local/etc/php/php.ini
+  php /tmp/hello.php
+  ```
+
+![image-20200922094155402](./typora-user-images/image-20200922094155402.png)
+
+### Docker Hub
+
+https://hub.docker.com/
+
+서버에서 생성한 이미지를 다른 서버에서 사용하기 위해 중앙 저장소에 이미지 저장
+
+> 검색을 통해 미리 생성된 이미지 사용 가능
+
+
