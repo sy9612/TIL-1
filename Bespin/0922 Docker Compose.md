@@ -285,3 +285,70 @@ local에다가 nginx 설정
 > 배포(Deploy)
 
 - 지속적 배포: 코드를 추가할 때마다 직접 배포하지 않고 자동화
+
+
+
+### 자동화
+
+```yaml
+name: CI for Django
+
+#어떤 상황에 실행되는지
+on: [push, pull_request]
+
+#병렬진행 dev, cd
+jobs:
+  dev:
+    name: Build dev
+    #어떤 환경에서?
+    runs-on: ubuntu-18.04
+    defaults:
+      run:
+        working-directory: app
+    strategy:
+    #버전을 여러 개 적어두면 jobs을 각 버전 별로 병렬 처리
+      max-parallel: 1 #job도 병렬로 처리 가능
+      matrix:
+        python-version: [3.8]
+    services:
+      db:
+        image: postgres
+        env:
+          POSTGRES_DB: djangosample
+          POSTGRES_USER: sampleuser
+          POSTGRES_PASSWORD: samplesecret
+        ports:
+          - 5432:5432
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
+    - name: Check Lint
+      run: flake8 api
+    - name: Run Tests
+      run: python manage.py test
+      
+      
+  cd:
+    name: Continuous Deployment
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build docker image
+      #깃 해쉬 값을 환경 변수로
+      env:
+        IMAGE_TAG: ${{ github.sha }}
+     #빌드
+     #도커 이미지의 태그
+      run: |
+        docker build \
+            --build-arg BUILD_COMMIT=$IMAGE_TAG \
+            -t github-actions-sample:$IMAGE_TAG .
+```
+
