@@ -357,16 +357,19 @@
 ### CodeDeploy
 
 #### 일반
+### CodeDeploy
 
-🌐 CodeDeploy
+#### 일반
+
+:globe_with_meridians: CodeDeploy
 
 > EC2 인스턴스 및 온프레미스에서 실행 중인 인스턴스를 비롯하여 모든 인스턴스에 대한 **코드 배포 자동화 서비스**
 
 - 새로운 기능 빠르게 공개
 - 배포 동안 가동 중지 시간을 줄임
 - 복잡한 앱 업데이트 작업 처리
-- 오류가 발생하기 쉬운 수동 작업 필요성 ❌
-- 수천 개의 인스턴스에 손쉽게 배포 ⭕
+- 오류가 발생하기 쉬운 수동 작업 필요성 :x:
+- 수천 개의 인스턴스에 손쉽게 배포 :o:
 
 ##### 사용
 
@@ -377,4 +380,236 @@
 ##### 배포 유형
 
 - 모든 유형의 애플리케이션
-- 각 인스턴스에 복사할 파일 및 실행할 스크립트 지정
+
+##### 기존 도구 체인과 연동
+
+- 구성 관리 시스템
+- CI/CD
+- 소스 제어 시스템
+
+##### Elastic Beanstalk, OpsWorks와 다른 AWS 배포 및 관리 서비스
+
+- 개발자가 EC2 모든 인스턴스에서 소프트웨어를 배포하고 업데이트하는 것에 초점을 맞춘 **빌딩 블록 서비스**
+- Elastic Beanstalk, OpsWokrs
+  - 엔드 투 엔드 애플리케이션 관리 솔루션
+
+#### 개념
+
+##### :globe_with_meridians: ​애플리케이션
+
+> 인스턴스 그룹에 배포할 소프트웨어와 구성의 모음
+
+- 그룹 내 인스턴스는 동일한 소프트웨어 실행
+- 대규모 분산 시스템
+  - 웹 계층이 하나의 애플리케이션 구성
+  - 데이터 계층이 다른 애플리케이션 구성
+
+##### :globe_with_meridians: 수정 버전
+
+> AppSpec 파일과 함께 배포할 수 있는 콘텐츠(소스코드, 빌드 후 아티팩트, 웹 페이지, 실행 파일, 배포 스크립트)의 특정 버전
+
+- GitHub, S3 버킷에서 수정 버전 액세스
+
+##### :globe_with_meridians: 배포 그룹
+
+> EC2 인스턴스, AWS Lambda 함수를 CodeDeploy 배포에 그룹화하기 위한 CodeDeploy 엔터티
+>
+> EC2 배포의 경우 :point_right: 배포 대상인 애플리케이션과 관련된 인스턴스 집합
+
+##### :globe_with_meridians: 배포
+
+###### 배포 구성
+
+> 배포 장애 처리 방법을 비롯하여 배포 그룹을 통해 배포가 진행되는 방식
+
+- 여러 인스턴스 배포 그루벵 다운 타임 없이 배포 수행
+- :speech_balloon: 애플리케이션에서 배포 그룹에 있는 50% 이상의 인스턴스가 가동되어 트래픽을 처리하도록 요구하는 경우
+  - 배포 구성에 이를 지정하여 배포로 인해 다운 타임이 발생하는 것 방지
+- 배포나 배포 그룹에 연결된 배포 구성이 없는 경우
+  - CodeDeploy는 기본적으로 한 번에 하나의 인스턴스에 배포
+
+###### 배포 파라미터 지정
+
+1. 수정 버전: 배포할 것 지정
+2. 배포 그룹: 배포 위치 지정
+3. 배포 구성: 배포할 방법 지정 (선택)
+
+##### :globe_with_meridians: AppSpec 파일
+
+> 복사할 파일과 실행할 스크립트 지정하는 구성 파일
+
+- YAML 파일 형식
+
+- 저장 위치 = 수정 버전의 루트 디렉터리
+
+- CodeDeploy Agent가 사용
+
+- 2 섹션으로 구성
+
+  - 파일 섹션
+
+    > 복사할 수정 버전의 소스 파일과 각 인스턴스의 대상 폴더 지정
+
+  - 후크 섹션
+
+    > 각 배포 단계 동안 실행할 스크립트의 위치(상대 경로) 지정
+
+```yaml
+version: 0.0
+
+os: linux
+
+files: 
+
+# You can specify one or more mappings in the files section.
+
+  - source: /
+
+    destination: /var/www/html/WordPress
+
+hooks:
+
+ # The lifecycle hooks sections allows you to specify deployment scripts.
+
+ApplicationStop: 
+
+# Step 1: Stop Apache and MySQL if running.
+
+    - location: helper_scripts/stop_server.sh
+
+BeforeInstall: 
+
+# Step 2: Install Apache and MySQL.
+
+# You can specify one or more scripts per deployment lifecycle event.
+
+    - location: deploy_hooks/puppet-apply-apache.sh
+
+    - location: deploy_hooks/puppet-apply-mysql.sh 
+
+ AfterInstall: 
+
+# Step 3: Set permissions.
+
+    - location: deploy_hooks /change_permissions.sh
+
+      timeout: 30
+
+      runas: root
+
+# Step 4: Start the server.
+
+    - location: helper_scripts/start_server.sh
+
+      timeout: 30
+
+      runas: root
+```
+
+###### 배포 수명 주기 이벤트
+
+- 배포 전 사전 설정된 일련의 단계
+
+> 배포의 일부로 코드를 실행할 수 있음
+
+:speech_balloon: 같이 사용 할 수 있는 시기 관련 예제 & 함께 지원되는 다른 배포 수명 주기 이벤트
+
+- ApplicationsStop
+
+  > 수정 버전이 다운로드되기 전에 일어나는 첫 번째 배포 수명 주기 이벤트
+  >
+  > AppSpec 파일과 스크립트 마지막에 성공적으로 배포한 수정 버전에서 가져옴
+  >
+  > 배포 준비 시 앱 점진적 중지, 현재 설치된 패키지 제거 시 사용
+
+- DownloadBundle
+
+  > 에이전트가 수정 버전 파일을 인스턴스의 임시 위치로 복사
+  >
+  > 에이전트에 예약
+  >
+  > 사용자 스크립트 실행 :x:
+
+- BeforInstall
+
+  > 파일 복호화, 현재 버전의 백업 생성 등 설치 전 작업에 사용
+
+- Install
+
+  > 에이전트는 수정 버전 파일을 임시 위치에서 최종 대상 폴더로 복사
+
+- AfterInstall
+
+  > 애플리케이션 구성이나 파일 권한 변경 등의 작업에 사용
+
+- ApplicationStart
+
+  > ApplicationsSTop 이벤트 동안 중지된 서비스를 다시 시작하는 데 사용
+
+- ValidateService
+
+  > 마지막 수명 주기 이벤트
+  >
+  > 배포가 성공적으로 완료되었는지 확인
+
+### CodePipeline
+
+> 소프트웨어를 릴리스하는 데 필요한 단계를 **모델링** **시각화** **자동화** 해주는 지속적 전달 서비스
+
+- 정의된 워크플로우에따라 코드 변경이 있을 때마다 애플리케이션 빌드, 테스트, 배포
+  - 코드 빌드
+  - 사전 프로덕션 환경으로 배포
+  - 애플리케이션 테스트 및 프로덕션으로 릴리스를 비롯한 전체 릴리스 프로세스 모델링
+- 파트너 도구 및 자체 사용자 지정 도구를 릴리스 프로세스 중 원하는 단계에 통합 :point_right: 포괄적이며 지속적 전달 솔루션 형성
+- 새로운 변경 사항을 일관된 품질 검사 세트를 통해 실행 :point_right: 소프트웨어 업데이트의 속도와 품질 향상
+
+##### 지속적 전달
+
+> 프로덕션에 릴리스하기 위한 코드 변경이 자동으로 빌드, 테스트, 준비되는 소프트웨어 개발 방식
+
+#### 개념
+
+![image-20201007093635221](C:./image/image-20201007093635221.png)
+
+##### :globe_with_meridians: 파이프라인
+
+> 소프트웨어 변경 사항이 릴리스 프로세스에 적용되는 방법을 설명하는 워크플로우 구성
+>
+> 단계 및 자업 시퀀스로 워크플로우 정의
+
+##### :globe_with_meridians: 수정 버전
+
+> 파이프라인에서 정의한 소스 위치에 이루어진 변경 사항
+
+- 소스 코드, 빌드 결과, 구성, 데이터
+- 동시에 여러 개의 수정 버전 존재
+
+##### :globe_with_meridians: 스테이지
+
+> 하나 이상의 작업으로 이루어진 그룹
+
+- 파이프라인에는 2개 이상의 스테이지 존재
+
+##### :globe_with_meridians: 작업
+
+> 수정 버전에서 수행한 일
+
+- 단계 구성에서 정의한 대로 지정된 순서나 직렬/병렬로 발생
+
+##### :globe_with_meridians: 아티팩트
+
+> 작업이 파일 또는 파일 세트에 실행될 때 파일
+>
+> 파이프라인 이후 작업에 따라 작동
+
+- 소스 작업: 코드의 최신 버전을 소스 아티팩트로 출력
+- 빌드 작업: 읽음
+- 컴파일 후 빌드 작업: 빌드 출력을 다른 아티팩트로 업로드 이후 배포 작업이 읽음
+
+##### :globe_with_meridians: 전환
+
+> 파이프라인의 시트에지는 전환을 거쳐 연결 :point_right: CodePipeline 콘솔에서 화살표로 표시
+
+- 스테이지 작업이 성공적으로 완료된 수정 버전은 자동으로 전환 화살표로 표시
+
+- 스테이지 사이 활성화/비화성화 가능
