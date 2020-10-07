@@ -569,7 +569,7 @@ BeforeInstall:
 
 #### 개념
 
-![image-20201007093635221](C:./image/image-20201007093635221.png)
+![image-20201007093635221](./image/image-20201007093635221.png)
 
 ##### :globe_with_meridians: 파이프라인
 
