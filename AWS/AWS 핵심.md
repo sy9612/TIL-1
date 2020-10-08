@@ -8,7 +8,7 @@
 
 #### [VPC](#VPC)
 
-#### [Route 53](#Route-53)
+## [Route 53](#Route-53)
 
 ### 컴퓨팅
 
