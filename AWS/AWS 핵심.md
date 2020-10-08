@@ -11,7 +11,7 @@
 
 ### 컴퓨팅
 
-#### [EC2](#ec2)
+[EC2](#EC2)
 
 #### [Auto Scaling](#auto-scaling)
 
