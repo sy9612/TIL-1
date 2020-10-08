@@ -1,4 +1,4 @@
-
+![image-20201005165121584](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20201005165121584.png)
 
 # 핵심
 
@@ -6,27 +6,27 @@
 
 ### 네트워크
 
-#### [VPC](#VPC)
+#### [VPC](#vpc)
 
-## [Route 53](#Route-53)
+#### [Route 53](#route-53)
 
 ### 컴퓨팅
 
-#### [EC2](#EC2)
+#### [EC2](#ec2)
 
-#### [Auto Scaling](#Auto-Scaling)
+#### [Auto Scaling](#auto-scaling)
 
-#### [Elastic Beanstalk](#Elastic-Beanstalk)
+#### [Elastic Beanstalk](#elastic-beanstalk)
 
-#### [ECS](#ECS)
+#### [ECS](#ecs)
 
-#### [Lambda](#Lambda)
+#### [Lambda](#lambda)
 
 ### 스토리지
 
-#### [EBS](#EBS)
+#### [EBS](#ebs)
 
-#### [S3](#S3)
+#### [S3](#s3)
 
 
 
