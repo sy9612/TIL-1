@@ -1,4 +1,3 @@
-![image-20201005165121584](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20201005165121584.png)
 
 # 데이터베이스
 
