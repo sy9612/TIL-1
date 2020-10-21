@@ -20,7 +20,7 @@
 
 - Scale-Up
 
-  ![image-20201020161813366](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20201020161813366.png)
+  ![image-20201020161813366](../image/image-20201020161813366.png)
 
   - 테이블이 수평적으로 커짐
 
@@ -48,7 +48,7 @@
 
 - Scale-Out
 
-  ![image-20201020161901606](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20201020161901606.png)
+  ![image-20201020161901606](../image/image-20201020161901606.png)
 
   - 여러 DB 시스템 추가
     - 무한대로 증설 가능
