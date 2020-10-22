@@ -2,6 +2,10 @@
 
 :bookmark: 참고사이트
 
+> 3 tier Architecture https://www.techiexpert.com/serverless-multi-tier-architecture-on-aws/
+>
+> :play_or_pause_button: Lambda로 게시판 서버 API 생성 https://www.youtube.com/watch?v=x0iyaENTxU0
+>
 > Lambda & Gateway 시작 및 연결 https://gun0912.tistory.com/60
 >
 > SQL vs NoSQL https://medium.com/harrythegreat/aws-%EC%84%9C%EB%B2%84%EB%A6%AC%EC%8A%A4%EB%A5%BC-%EC%9C%84%ED%95%9C-rds-proxy%EC%84%9C%EB%B9%84%EC%8A%A4-fb5815b83cce
@@ -12,7 +16,13 @@
 >
 > lambda - gateway - dynamodb https://medium.com/@yumenohosi/aws-lambda-api-gateway-dynamodb-node-js-%EC%82%AC%EC%9A%A9%EA%B8%B0-%EC%82%BD%EC%A7%88%EA%B8%B0-b5352e00b396
 >
-> 연결 실습 https://blog.naver.com/PostView.nhn?blogId=scw0531&logNo=221451926933&parentCategoryNo=&categoryNo=52&viewDate=&isShowPopularPosts=false&from=postView
+> dynamo 연결 실습 https://blog.naver.com/PostView.nhn?blogId=scw0531&logNo=221451926933&parentCategoryNo=&categoryNo=52&viewDate=&isShowPopularPosts=false&from=postView
+>
+> serverless 배포 https://velopert.com/3577
+>
+> ---
+>
+> Lambda - RDS 연결 https://base-on.tistory.com/73
 
 ## 데이터베이스
 
@@ -57,6 +67,14 @@
 
   > 자주 변하는 데이터 구조
 
+## 정적 웹사이트 호스팅
+
+https://devlog-h.tistory.com/11
+
+
+
+
+
 
 
 ## 삽질
@@ -81,18 +99,24 @@
     >
     > ```
     > {
-    >             "Effect": "Allow",
-    >             "Action": [
-    >                 "dynamodb:DescribeStream",
-    >                 "dynamodb:GetRecords",
-    >                 "dynamodb:GetShardIterator",
-    >                 "dynamodb:ListStreams"
-    >             ],
-    >             "Resource": "arn:aws:dynamodb:ap-northeast-2:527478947915:table/*"
+    >          "Effect": "Allow",
+    >          "Action": [
+    >              "dynamodb:DescribeStream",
+    >              "dynamodb:GetRecords",
+    >              "dynamodb:GetShardIterator",
+    >              "dynamodb:ListStreams"
+    >          ],
+    >          "Resource": "arn:aws:dynamodb:ap-northeast-2:527478947915:table/*"
     > }
     > ```
     >
     > 해당 정책 설정 -> JSON으로 정책 편집 가능
+
+  - AWS 공식 문서
+
+    > https://aws.amazon.com/ko/getting-started/hands-on/build-serverless-web-app-lambda-apigateway-s3-dynamodb-cognito/module-3/
+
+    
 
 ### 2. Lambda - VPC 설정
 
@@ -103,15 +127,34 @@
   - IAM 설정
 
     > ```
-    >  {
-    >    "Effect": "Allow",
-    >    "Action": [
-    >    	"ec2:DescribeNetworkInterfaces",
-    >     "ec2:CreateNetworkInterface",
-    >     "ec2:DeleteNetworkInterface",
-    >     "ec2:DescribeInstances",
-    >     "ec2:AttachNetworkInterface"
-    >    ],
-    >    "Resource": "*"
-    >  }
+    > {
+    > "Effect": "Allow",
+    > "Action": [
+    > 	"ec2:DescribeNetworkInterfaces",
+    >  "ec2:CreateNetworkInterface",
+    >  "ec2:DeleteNetworkInterface",
+    >  "ec2:DescribeInstances",
+    >  "ec2:AttachNetworkInterface"
+    > ],
+    > "Resource": "*"
+    > }
     > ```
+
+### 3. invoke API를 호출하면 이 메시지를 사용한 작업에 실패했습니다. Rate Exceeded.
+
+### 4. Gateway URL
+
+> 배포를 하면 된다.
+>
+> ```
+> {"message":"Missing Authentication Token"}
+> ```
+>
+> > link 뒤에 /board, 리소스 정보를 줄 것
+>
+> https://sarc.io/index.php/aws/767
+
+> html 입히기
+>
+> - 보안적인 문제로 인해 HTML을 일반적으로 두게 되면 CORS 에러 발생
+
