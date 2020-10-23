@@ -23,6 +23,10 @@
 > ---
 >
 > Lambda - RDS 연결 https://base-on.tistory.com/73
+>
+> ---
+>
+> Serverless 프레임 워크 https://ndb796.tistory.com/311?category=1045560 --> 나동빈 블로그
 
 ## 데이터베이스
 
@@ -54,6 +58,8 @@
 
 - AWS Secret Manager 세팅
 
+:exclamation: 서버리스 SQL 형태인 Aurora 존재
+
 ### NoSQL
 
 - Scale-Out
@@ -66,6 +72,8 @@
 - 유연한 DB Schema
 
   > 자주 변하는 데이터 구조
+
+
 
 ## 정적 웹사이트 호스팅
 
@@ -158,3 +166,12 @@ https://devlog-h.tistory.com/11
 >
 > - 보안적인 문제로 인해 HTML을 일반적으로 두게 되면 CORS 에러 발생
 
+### 5. 502 Bad Gateway
+
+> https://medium.com/@yumenohosi/aws-lambda-api-gateway-dynamodb-node-js-%EC%82%AC%EC%9A%A9%EA%B8%B0-%EC%82%BD%EC%A7%88%EA%B8%B0-b5352e00b396
+
+- CloudWatch에서 로그 확인 -->
+
+  - Malformed Lambda proxy response.
+
+    > lambda 호출 시 원하는 response 형태가 정해져 있음
