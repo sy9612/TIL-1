@@ -1,5 +1,7 @@
 # ServerLess
 
+![image-20201026175022472](../image/image-20201026175022472.png)
+
 :bookmark: 참고사이트
 
 > 3 tier Architecture https://www.techiexpert.com/serverless-multi-tier-architecture-on-aws/
@@ -28,9 +30,33 @@
 >
 > Serverless 프레임 워크 https://ndb796.tistory.com/311?category=1045560 --> 나동빈 블로그
 
+### 특징
+
+> https://brunch.co.kr/@yesjun/3
+
+- 서버 시스템 관리 :x:
+
+- 무상태(Stateless) 기반
+
+- 자동으로 프로세스(성능) 확장
+
+- 운영 비용 :x: :point_right: 이벤트 기반 비용 :o:
+
+- 첫 번째 이벤트 처리 시 시작 시간 필요
+
+- 런타임 분리 :point_right: 보안 :o:
+
+  > 런타임을 분리하는 것이 왜 보안에 강한가?
+
+- ColdStart가 존재
+
+  > 첫 이벤트 처리 시 약간의 시간 소요
+
+  
+
 ## 데이터베이스
 
-### SQL
+### RDS(SQL)
 
 - Scale-Up
 
@@ -60,7 +86,11 @@
 
 :exclamation: 서버리스 SQL 형태인 Aurora 존재
 
-### NoSQL
+- HTTP 액세스
+- 유연성
+- 관계형 DB
+
+### DynamoDB(NoSQL)
 
 - Scale-Out
 
@@ -72,6 +102,77 @@
 - 유연한 DB Schema
 
   > 자주 변하는 데이터 구조
+
+
+
+#### DynamoDB와 Node.js 연결 코딩
+
+> https://software-creator.tistory.com/16
+
+```js
+//GET
+//검색할 Table이름과 Key값
+const params = {
+    TableNaeme: "Food",
+    Key: {
+        "type": "Korean",
+        "name": "Soybean pastestew"
+    }
+}
+
+//POST
+const params = {
+    TableName: tableName,
+    Item: {
+        "type:" : "Western",
+        "name" : "Carbonara",
+        "ingredients" :{
+            "egg" : "1",
+            "spaghetti" : "90g"
+        }
+    }
+}
+
+//PUT
+const params = {
+    TableName: tableName,
+    Key: {
+        "type": "Western",
+        "name": "Carbonara",
+    },
+    UpdateExpression: "set price = :price", //수정할 것 선택
+    ExpressionAttributeValues:{ //수정할 것의 값
+        ":price": 15000
+    }
+}
+
+//DELETE
+const params={
+    TableName: tableName,
+    Key:{
+        "type": "Korean",
+        "name": "Soybean pastestew",
+    },
+    ConditionExpression: "price <= :price", //조건
+    ExpressionAttributeValues:{ //가격
+        ":price": 8000
+    }
+}
+
+			case 'DELETE':
+                body = await dynamo.delete(params).promise();
+                break;
+            case 'GET':
+                body = await dynamo.scan(payload).promise();
+//				docClient.get(params).promise();
+                break;
+            case 'POST':
+                body = await dynamo.put(params).promise(); //params에 있는 item 값을 add
+                break;
+            case 'PUT':
+                body = await dynamo.update(params).promise();
+                break;
+```
 
 
 
@@ -175,3 +276,13 @@ https://devlog-h.tistory.com/11
   - Malformed Lambda proxy response.
 
     > lambda 호출 시 원하는 response 형태가 정해져 있음
+    >
+    > ```js
+    >  return {
+    >         statusCode,
+    >         body,
+    >         headers,
+    >     };
+    > ```
+    >
+    > 해당 형식을 꼭 지켜야 함
