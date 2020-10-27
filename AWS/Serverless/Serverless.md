@@ -1,6 +1,7 @@
 # ServerLess
 
-![image-20201027172018045](../image/image-20201027172018045.png)
+![image-20201027174729653](../image/image-20201027174729653.png)
+
 
 > CloudFront, S3, API Gateway, Lambda :point_right: VPC 설정 :x:
 >
