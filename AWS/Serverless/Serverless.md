@@ -5,6 +5,11 @@
 > CloudFront, S3, API Gateway, Lambda :point_right: VPC 설정 :x:
 >
 > Serverless에서 VPC는 데이터 영역만 주의하면 된다
+>
+> > RDS는 VPC 연결 필수 :point_right: Lambda도 같은 VPC 영역 :o:
+> >
+> > DynamoDB :point_right: VPC 설정 :x:
+
 
 :bookmark: 참고사이트
 
