@@ -1,6 +1,10 @@
 # ServerLess
 
-![image-20201026175022472](../image/image-20201026175022472.png)
+![image-20201027172018045](../image/image-20201027172018045.png)
+
+> CloudFront, S3, API Gateway, Lambda :point_right: VPC 설정 :x:
+>
+> Serverless에서 VPC는 데이터 영역만 주의하면 된다
 
 :bookmark: 참고사이트
 
@@ -108,6 +112,10 @@
 #### DynamoDB와 Node.js 연결 코딩
 
 > https://software-creator.tistory.com/16
+>
+> DELETE https://gist.github.com/kiewic/b175e6a926d3ddd7277463980e8bd3b2
+>
+> 전체 정리 https://www.theteams.kr/teams/2440/post/67303
 
 ```js
 //GET
@@ -158,6 +166,15 @@ const params={
         ":price": 8000
     }
 }
+
+//DELETE -> 2
+const params={
+    TableName: tableName,
+    Key:{
+        "type": "Korean", // 삭제할 것의 Key 입력
+    },
+}
+
 
 			case 'DELETE':
                 body = await dynamo.delete(params).promise();
@@ -251,6 +268,8 @@ https://devlog-h.tistory.com/11
 
 ### 3. invoke API를 호출하면 이 메시지를 사용한 작업에 실패했습니다. Rate Exceeded.
 
+> 해결 못함
+
 ### 4. Gateway URL
 
 > 배포를 하면 된다.
@@ -286,3 +305,33 @@ https://devlog-h.tistory.com/11
     > ```
     >
     > 해당 형식을 꼭 지켜야 함
+
+### 6. VPC 설정
+
+> https://changhoi.github.io/posts/serverless/serverless-vpc-deploy-demo/
+
+- 간단한 프로젝트
+
+  > 별다른 옵션 없이 Public한 오픈 API
+
+- 개발 서버 분리 || 일정 기간 동안 유지 보수 및 배포
+
+  > 내부 VPC에서 배포필요
+  >
+  > - S3, DynamoDB 접근을 위해 NAAT Gateway || VPC Endpoint 필요
+
+### 7. HTML로 접근 시 CORS 에러
+
+Access to fetch at 'https://92ziazl1wi.execute-api.ap-northeast-2.amazonaws.com/2020-10-22/board' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+
+```js
+ callback(null, { 
+                    'statusCode': 200, 
+                    'headers': {'Access-Control-Allow-Origin': '*'},
+                    'body': JSON.stringify(body) }
+                    );
+}
+```
+
+> header에서 Allow 설정 필수!
+
