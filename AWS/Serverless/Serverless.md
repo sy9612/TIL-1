@@ -62,7 +62,17 @@
 
   > 첫 이벤트 처리 시 약간의 시간 소요
 
-  
+  ## API Gateway
+
+> https://meetup.toast.com/posts/201
+
+- 규모와 관계 없이 REST 및 WebSocket API 생성, 게시, 유지, 모니터링, 보호
+
+- RESTful API 생성
+  - HTTP 기반
+  - 상태 비저장 Client - Server 통신 활성화
+  - 표준 HTTP Method (CRUD)
+- 통합적 엔드포인트(URL)와 RETS API 관리
 
 ## 데이터베이스
 
