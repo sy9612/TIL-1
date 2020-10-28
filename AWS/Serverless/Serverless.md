@@ -62,7 +62,7 @@
 
   > 첫 이벤트 처리 시 약간의 시간 소요
 
-  ## API Gateway
+## API Gateway
 
 > https://meetup.toast.com/posts/201
 
