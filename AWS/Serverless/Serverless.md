@@ -69,10 +69,17 @@
 - 규모와 관계 없이 REST 및 WebSocket API 생성, 게시, 유지, 모니터링, 보호
 
 - RESTful API 생성
+
   - HTTP 기반
   - 상태 비저장 Client - Server 통신 활성화
   - 표준 HTTP Method (CRUD)
-- 통합적 엔드포인트(URL)와 RETS API 관리
+  - REST Endpoint 제공 :point_right: 함수 실행
+
+- 통합적 엔드포인트와 RETS API 관리
+
+  > 엔드포인트: 소프트웨어나 제품의 최종 목적지(사용자) ex) PC, 노트북, 핸드폰 등
+
+- 여러 개의 API 서버로 부하를 분산
 
 ## 데이터베이스
 
