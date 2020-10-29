@@ -10,7 +10,31 @@
 > > RDS는 VPC 연결 필수 :point_right: Lambda도 같은 VPC 영역 :o:
 > >
 > > DynamoDB :point_right: VPC 설정 :x:
+* White Board 준비
 
+  > 안녕하세요 Serverless White Board session 발표를 맡은 김지홍 입니다.
+  >
+  > Serverless를 직역하면 어떻게 해석이 될까요? Server와 Less, 즉 Server가 없다는 뜻입니다.
+  >
+  > 그러나 실제로 Serverless는 서버가 아에 존재하지 않는다는 것은 아닙니다. 서버는 존재하지만, 더 이상 신경 쓸 필요가 없다는 것입니다.
+  >
+  > 그렇다면 어떤 방법을 이용해야 Serverless 환경을 구축할 수 있을까요?
+  >
+  > - 제안 조건 (필기)
+  >
+  > 이번 White Board 세션에서 제가 받은 조건은 DB와 API Gateway, Lambda를 사용한 REST 통신이 가능한 Serverless 환경입니다.
+  >
+  > 사용자가 웹 브라우저를 통해 REST를 요청하기 위해 S3에 존재하는 정적 웹 사이트를 CloudFront를 통해 접속합니다. 여기서 보통 Route53과 같은 도메인을 주지만, 간단한 REST 환경이므로 가격이 비싼 도메인 환경을 제거하였습니다.
+  >
+  > 사용자가 한 REST 요청은 API Gateway에게 전달됩니다. API Gateway는 Endpoint를 제공해 Lambda 함수를 작동시킵니다.
+  >
+  > Lambda는 함수 단위로 서버를 실행합니다. 필요한 기능을 Lambda를 통해 작동할 수 있습니다. 여기서는 REST를 위해서 DynamoDB에 접근합니다. DynamoDB는 비관계형 함수로, Scale out을 한다는 강점을 가지고 있습니다. Lambda는 필요할 때마다 서버에 접근하기 때문에, Cold Start의 경우 매번 새로운 Connect이 생성하게 됩니다. 이것은 DB의 용량이 더욱 필요하다는 것을 의미하므로, Scale UP을 하는 RDS는 사용하기에 부적절 할 수 있습니다. 따라서, DynamoDB로 Lambda 사용에 최적화를 진행합니다.
+  >
+  > > RDS를 사용한다면 RDS_PROXY를 사용할 수 있습니다. 그러나 위와 같은 이점으로 반드시 관계형 DB를 사용해야 하는 상황이 아니라면 DynamoDB가 Lambda에 사용하기에 적절합니다.
+  >
+  > 이렇게 구성을 하면 Cloudfront와 S3는 Presentation, API와 Lambda는 Logic, DynamoDB는 Data tier로 하여 아키텍처를 나눌 수 있습니다.
+  >
+  > 그리고 이 모든 것을 CloudWatch를 통해 로그를 확인할 수 있고, 다양한 Serverless Framwork를 통해 API gateway와 Lambda를 매번 엮는 별도의 과정을 겪을 필요가 없습니다. 
 
 :bookmark: 참고사이트
 
@@ -32,9 +56,13 @@
 >
 > serverless 배포 https://velopert.com/3577
 >
+> (Azure) 고려 사항 https://docs.microsoft.com/ko-kr/dotnet/architecture/serverless/serverless-design-examples
+>
 > ---
 >
 > Lambda - RDS 연결 https://base-on.tistory.com/73
+>
+> serverless Framework https://novemberde.github.io/aws/2017/08/14/Serverless.html
 >
 > ---
 >
@@ -61,6 +89,8 @@
 - ColdStart가 존재
 
   > 첫 이벤트 처리 시 약간의 시간 소요
+
+
 
 ## API Gateway
 
