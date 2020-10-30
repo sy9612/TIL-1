@@ -2,14 +2,14 @@
 
 ![image-20201027174729653](../image/image-20201027174729653.png)
 
-
 > CloudFront, S3, API Gateway, Lambda :point_right: VPC 설정 :x:
 >
-> Serverless에서 VPC는 데이터 영역만 주의하면 된다
+> Serverless에서 VPC는 데이터 영역만 주의하면 된다.
 >
 > > RDS는 VPC 연결 필수 :point_right: Lambda도 같은 VPC 영역 :o:
 > >
 > > DynamoDB :point_right: VPC 설정 :x:
+
 * White Board 준비
 
   > 안녕하세요 Serverless White Board session 발표를 맡은 김지홍 입니다.
@@ -26,7 +26,7 @@
   >
   > 사용자가 웹 브라우저를 통해 REST를 요청하기 위해 S3에 존재하는 정적 웹 사이트를 CloudFront를 통해 접속합니다. 여기서 보통 Route53과 같은 도메인을 주지만, 간단한 REST 환경이므로 가격이 비싼 도메인 환경을 제거하였습니다.
   >
-  > 사용자가 한 REST 요청은 API Gateway에게 전달됩니다. API Gateway는 Endpoint를 제공해 Lambda 함수를 작동시킵니다.
+  > 사용자가 한 REST 요청은 API Gateway에게 전달됩니다. API Gateway는 REST API 기반으로 생성되어, REST기능을 하는 Lambda 함수를 작동시킵니다.
   >
   > Lambda는 함수 단위로 서버를 실행합니다. 필요한 기능을 Lambda를 통해 작동할 수 있습니다. 여기서는 REST를 위해서 DynamoDB에 접근합니다. DynamoDB는 비관계형 함수로, Scale out을 한다는 강점을 가지고 있습니다. Lambda는 필요할 때마다 서버에 접근하기 때문에, Cold Start의 경우 매번 새로운 Connect이 생성하게 됩니다. 이것은 DB의 용량이 더욱 필요하다는 것을 의미하므로, Scale UP을 하는 RDS는 사용하기에 부적절 할 수 있습니다. 따라서, DynamoDB로 Lambda 사용에 최적화를 진행합니다.
   >
@@ -35,6 +35,21 @@
   > 이렇게 구성을 하면 Cloudfront와 S3는 Presentation, API와 Lambda는 Logic, DynamoDB는 Data tier로 하여 아키텍처를 나눌 수 있습니다.
   >
   > 그리고 이 모든 것을 CloudWatch를 통해 로그를 확인할 수 있고, 다양한 Serverless Framwork를 통해 API gateway와 Lambda를 매번 엮는 별도의 과정을 겪을 필요가 없습니다. 
+
+* 예상 QnA
+
+  - RDS 대신 DynamoDB 사용 이유
+    - Aurora: HTTP Access
+    - 다른 RDS: Scale Up :point_right: connect이 계속 될 경우 Scale Up 필요, Scale Up은 비싸고 어려움
+    - DynamoDB: Scale Out, REST Access 기반
+  - CloudFront 사용 이유
+    - S3만 이용해서 정적 웹 사이트 배포 :point_right: http 접근, 보안 :x:
+    - CloudFront: http :point_right: https 접근
+  - IAM: Lambda에 적용하여 DynamoDB 연결 :o:
+  - 보안
+    - API Gateway에서 대부분 자동으로 :o:
+    - CloudFront
+    - S3 등 priavte로 설정
 
 :bookmark: 참고사이트
 
@@ -62,11 +77,13 @@
 >
 > Lambda - RDS 연결 https://base-on.tistory.com/73
 >
-> serverless Framework https://novemberde.github.io/aws/2017/08/14/Serverless.html
+> 정적 웹 사이트 생성 및 배포 https://ongamedev.tistory.com/entry/S3-%EC%A0%95%EC%A0%81-%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8%EB%A5%BC-https%EB%A1%9C-%EC%A0%91%EC%86%8D%ED%95%98%EA%B8%B0
 >
 > ---
 >
 > Serverless 프레임 워크 https://ndb796.tistory.com/311?category=1045560 --> 나동빈 블로그
+>
+> serverless Framework https://novemberde.github.io/aws/2017/08/14/Serverless.html
 
 ### 특징
 
@@ -90,6 +107,11 @@
 
   > 첫 이벤트 처리 시 약간의 시간 소요
 
+  > ColdStart가 일어나지 않을려면 어떻게 해야하는 가?
+  >
+  > - 지속적으로 함수를 실행시킨다
+  > - 돈에 관한 문제 -> 고객사의 요구사항
+
 
 
 ## API Gateway
@@ -110,6 +132,8 @@
   > 엔드포인트: 소프트웨어나 제품의 최종 목적지(사용자) ex) PC, 노트북, 핸드폰 등
 
 - 여러 개의 API 서버로 부하를 분산
+
+
 
 ## 데이터베이스
 
