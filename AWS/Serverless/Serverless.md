@@ -399,7 +399,7 @@ https://devlog-h.tistory.com/11
 
 ### 7. HTML로 접근 시 CORS 에러
 
-Access to fetch at 'https://92ziazl1wi.execute-api.ap-northeast-2.amazonaws.com/2020-10-22/board' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+:warning: Access to fetch at 'https://92ziazl1wi.execute-api.ap-northeast-2.amazonaws.com/2020-10-22/board' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
 
 ```js
  callback(null, { 
@@ -412,3 +412,31 @@ Access to fetch at 'https://92ziazl1wi.execute-api.ap-northeast-2.amazonaws.com/
 
 > header에서 Allow 설정 필수!
 
+### 8. CORS policy 에러
+
+:warning: Access to XMLHttpRequest at 'file:///C:/Users/jihong.kim/Desktop/serverless/[object%20Object]' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https.
+
+> https://velog.io/@takeknowledge/%EB%A1%9C%EC%BB%AC%EC%97%90%EC%84%9C-CORS-policy-%EA%B4%80%EB%A0%A8-%EC%97%90%EB%9F%AC%EA%B0%80-%EB%B0%9C%EC%83%9D%ED%95%98%EB%8A%94-%EC%9D%B4%EC%9C%A0-3gk4gyhreu
+
+```
+npm install http-server -g
+npx http-server
+(chrome 주소창) http://127.0.0.1:8080 - 해당 파일에 접속
+```
+
+- CORS 해결법: 서버에 올려서 해결
+- Why?
+  - 자바 스크립트 모듈 보안 요구사항
+  - 파일 리소스 요청 시 origin(출처)가 null로 넘어감
+
+### 9. jQuery ajax post 405 method not allowed
+
+> https://stackoverrun.com/ko/q/10901283
+
+ajax에 type: post 명시
+
+### 10. API Gateway Ajax POST 400 error
+
+> https://stackoverflow.com/questions/38987256/aws-api-gateway-cors-post-not-working
+
+Ajax에서 data 전송 시, json.stringfy를 해줘야 형식이 맞음..
