@@ -440,3 +440,15 @@ ajax에 type: post 명시
 > https://stackoverflow.com/questions/38987256/aws-api-gateway-cors-post-not-working
 
 Ajax에서 data 전송 시, json.stringfy를 해줘야 형식이 맞음..
+
+### 11. jQuery로 특정 위치에 html 뿌리기
+
+> https://stackoverflow.com/questions/55371920/display-data-in-table-on-ajax-success
+
+div로 영역 + id 잡아준 후 해당 위치에 .html(html);
+
+### 12. This XML file does not appear to have any style information associated with it. The document tree is shown below.
+
+> https://zamezzz.tistory.com/299
+
+s3 버킷을 public으로 설정
