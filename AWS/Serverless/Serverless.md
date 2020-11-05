@@ -452,3 +452,15 @@ div로 영역 + id 잡아준 후 해당 위치에 .html(html);
 > https://zamezzz.tistory.com/299
 
 s3 버킷을 public으로 설정
+
+
+
+## PoC
+
+> Proof of Concept
+>
+> 검증할 주요 내용에 대한 목표 설정 :point_right: 프로토타이핑 :point_right: 배포를 통해 **개념 증명**
+
+- 프로토타입 및 배포
+- 검증
+- 실현 여부 판단
