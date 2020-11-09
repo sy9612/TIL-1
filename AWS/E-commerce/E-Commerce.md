@@ -14,7 +14,7 @@ typora-root-url: ..\image
 
 
 
-### AWS 웹 구축
+## AWS 웹 구축
 
 > NDS https://tech.cloud.nongshim.co.kr/techblog/
 
@@ -43,4 +43,66 @@ typora-root-url: ..\image
   | VPC의 NAT Gateway 이용 | EC2에서 NAT 설치, AMI 존재 |
   | 비쌈 = 월 10만원       | EC2 가격                   |
 
-  
+
+
+#### Bastion Host
+
+> 하루 3분 IT https://m.blog.naver.com/PostView.nhn?blogId=pentamkt&logNo=221034903499&proxyReferer=https:%2F%2Fwww.google.com%2F
+
+> 내부와 외부 네트워크 사이에서 일종의 게이트 역할을 수행하는 호스트
+
+
+
+#### Route Table
+
+> 패킷이 목적지, 목적지까지의 거리와 가는 방법을 명시하는 테이블
+
+##### Routing
+
+> 한 네트워크에서 다른 네트워크로 패킷을 이동시키는 과정, 네트워크 안의 호스트에게 패킷을 전달하는 과정
+
+**:question: Nat와 Gateway를 하나의 VPC에서 연결하려고 할 때, Route Table을 따로 설정해야 하는가?**
+
+
+
+### EC2 연결
+
+**VPN**
+
+> 외부 :x: 단체 통신 :o: 사설통신망
+
+**OpenVPN**
+
+> 오픈소스 VPN, 세계 각지의 VPN, **오픈 소스 프로토콜**
+
+#### Private Instacne에 접근
+
+- 외부에서 접근 :x:
+
+  :exclamation: 터널링으로 해결
+
+##### 터널링
+
+> 외부와 내부의 특정 지점을 통로로 만들어 줌
+
+- **Putty**
+
+  > https://dgoh.tistory.com/118
+  >
+  > Nat를 이용한 터널링 https://cloud.hosting.kr/aws-ec2/
+
+  Connection > SSH > Tunnels
+
+
+
+
+
+
+
+
+
+## 삽질
+
+### 1. cannot find a valid baseurl for repo: amzn2-core/2/x86_64
+
+> NAT Gateway가 설정되어 있지 않아서 발생하는 문제
