@@ -8,11 +8,17 @@ typora-root-url: ..\image
 
 > https://www.lucidchart.com/blog/how-to-build-aws-architecture-diagrams
 
+
+
 ![img](https://blog.ezrabowman.com/content/images/2020/06/xUnwordpress_ref_arch-Add-NAT.png.pagespeed.ic.K1iafMbUFD.webp)
 
 > https://blog.ezrabowman.com/cost-effective-aws-architectures-for-wordpress-and-other-websites/
 
 
+
+![architecture](https://www.techtruffle.com/images/post/post1-architecture.png)
+
+> https://www.techtruffle.com/blog/aws/three-tier-architecture/
 
 ## AWS 웹 구축
 
@@ -53,6 +59,18 @@ typora-root-url: ..\image
 
 
 
+###### Nat vs Bastion
+
+- Nat: 인터넷 트래픽을 EC2 인스턴스 및 프라이빗 서브넷 제공
+
+- Bastion: EC2 인스턴스 관리
+
+  > Public에 Bastion 호스트 추가 > 사용자가 프라이빗 서브넷이 있는 EC2에 SSH 사용
+
+결론: Nat는 외부 접속을 위한 것
+
+
+
 #### Route Table
 
 > 패킷이 목적지, 목적지까지의 거리와 가는 방법을 명시하는 테이블
@@ -62,6 +80,10 @@ typora-root-url: ..\image
 > 한 네트워크에서 다른 네트워크로 패킷을 이동시키는 과정, 네트워크 안의 호스트에게 패킷을 전달하는 과정
 
 **:question: Nat와 Gateway를 하나의 VPC에서 연결하려고 할 때, Route Table을 따로 설정해야 하는가?**
+
+:question: **IGW를 Route Table에 설정 시, 모든 Subnet이랑 연결?**
+
+> 모두 연결해야 하는 것 같음 (정확 x)
 
 
 
@@ -99,10 +121,10 @@ typora-root-url: ..\image
 
 
 
-
-
 ## 삽질
 
 ### 1. cannot find a valid baseurl for repo: amzn2-core/2/x86_64
 
 > NAT Gateway가 설정되어 있지 않아서 발생하는 문제
+
+> Why? yum을 통한 설치는 인터넷으로 나가는 연결이 필요하기 때문 --> Nat의 문제라기 보단 IGW가 연결되어 있지 않아 발생한 문제?
