@@ -20,6 +20,10 @@ typora-root-url: ..\image
 
 > https://www.techtruffle.com/blog/aws/three-tier-architecture/
 
+
+
+![image-20201110151421046](/image-20201110151421046.png)
+
 ## AWS 웹 구축
 
 > NDS https://tech.cloud.nongshim.co.kr/techblog/
@@ -81,9 +85,37 @@ typora-root-url: ..\image
 
 **:question: Nat와 Gateway를 하나의 VPC에서 연결하려고 할 때, Route Table을 따로 설정해야 하는가?**
 
+> :o: IGW <- NAT 연결
+
 :question: **IGW를 Route Table에 설정 시, 모든 Subnet이랑 연결?**
 
-> 모두 연결해야 하는 것 같음 (정확 x)
+> :x: Nat와 연결, Nat에서 private instance들을 연결해서 private와 internet연결
+
+
+
+#### Load Balancer
+
+- 유저 트래픽 분배
+- DNS 제공
+- SSL (HTTPS) 통신 지원
+- 쿠키
+- public / private 트래픽 분리
+
+|      |                             ALB                              |                   NLB                   |            CLB            |
+| ---- | :----------------------------------------------------------: | :-------------------------------------: | :-----------------------: |
+| 정의 |                        Application LB                        |               Network LB                |        Classic LB         |
+| 특징 |         Layer 7단에서 **HTTP(s) application** 스위칭         |     Layer 4에서 **TCP**, UDP 스위칭     |  Layer 4, 7 범용 스위치   |
+|      |             IP, 람다, 인스턴스, 컨테이너, 콘텐츠             | EC2 인스턴스, 마이크로 서비스, 컨테이너 | 인스턴스 내부에서 LB 제공 |
+|      |                 하나의 머신에 로드밸런싱 :o:                 |                                         |     잘 사용하지 않음      |
+|      |               URL이나 Hostname을 통해 분배 :o:               |    정적 IP 주소 사용 = 고정 IP 활용     |                           |
+|      | Port 매핑 :point_right: redirect 가능<br />복수의 앱 로드 밸런싱 :o: |       WebSocket 유형의 앱에 적합        |                           |
+| 예시 |                       Docker, AWS ECS                        |                                         |                           |
+
+* 해당 웹 구축에서는 web server에는 ALB를, WAS로는 NLB를 설정
+
+  > web server: HTTPS 통신
+  >
+  > WAS: TCP 통신
 
 
 
@@ -126,5 +158,16 @@ typora-root-url: ..\image
 ### 1. cannot find a valid baseurl for repo: amzn2-core/2/x86_64
 
 > NAT Gateway가 설정되어 있지 않아서 발생하는 문제
+>
+> Nat Gateway의 route table에서 private instance와 연결
 
-> Why? yum을 통한 설치는 인터넷으로 나가는 연결이 필요하기 때문 --> Nat의 문제라기 보단 IGW가 연결되어 있지 않아 발생한 문제?
+> Why? yum을 통한 설치는 인터넷으로 나가는 연결이 필요하기 때문 --> IGW - NAT, NAT - instance
+
+### 2. #!/bin/bash
+
+- #!
+
+  > 스크립트를 실행할 쉘을 지정하는 선언문
+
+#### 3. ALB 접속이 오래 걸리는 이유
+
