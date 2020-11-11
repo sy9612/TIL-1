@@ -117,6 +117,10 @@ typora-root-url: ..\image
   >
   > WAS: TCP 통신
 
+- ALB 연결
+
+  > https://brunch.co.kr/@topasvga/745
+
 
 
 ### EC2 연결
@@ -149,7 +153,15 @@ typora-root-url: ..\image
 
 
 
+### WAS 설치
 
+1. 자바 설치
+
+   > https://gaemi606.tistory.com/127
+
+2. Tomcat 설치
+
+   > https://gaemi606.tistory.com/128
 
 
 
@@ -171,3 +183,16 @@ typora-root-url: ..\image
 
 #### 3. ALB 접속이 오래 걸리는 이유
 
+> ALB와 instance 연결이 제대로 안 되어 있었던 듯.. 삭제하고 다시 하니 :o:
+
+### 4. Tomcat 8080 port
+
+> 보안그룹에서 8080 port를 열어줘야 함 -> 재접속
+
+### 5. Apach와 Tomcat 연동
+
+- connector
+
+  > 어떤 서버에 설치..?
+  >
+  > 낼해야징.......
