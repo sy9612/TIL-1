@@ -22,7 +22,7 @@ typora-root-url: ..\image
 
 
 
-![image-20201110151421046](./image-20201110151421046.png)
+![image-20201110151421046](../image/image-20201110151421046.png)
 
 ## AWS 웹 구축
 
@@ -32,7 +32,7 @@ typora-root-url: ..\image
 
 ####  Nat
 
-![image-20201109095327044](./image-20201109095327044.png)
+![image-20201109095327044](../image/image-20201109095327044.png)
 
 - NAT(Network Address Translation): 네트워크 주소 변환
 
