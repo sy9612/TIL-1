@@ -158,7 +158,7 @@
 
 > https://practice.hooniworld.io/entry/Terraform-With-Windows-%EC%84%A4%EC%B9%98
 
-```
+```yaml
 provider "aws" {
  profile = "default"
  region = "us-east-1"
@@ -252,7 +252,7 @@ terraform destory
 
 ###### Elastic IP 할당
 
-```
+```yaml
 resource "aws_eip" "ip"{
 	vpc = true
 	instance = aws_instance.example.id
@@ -261,7 +261,7 @@ resource "aws_eip" "ip"{
 
 ###### 비종속 리소스
 
-```
+```yaml
 resource "aws_instance" "another" {
 	ami = "ami-b374d5a5"
 	instance_type = "t2.micro"
@@ -276,10 +276,15 @@ resource "aws_instance" "another" {
 
 > 인스턴스가 생성될 때 인스턴스를 초기화하는 방법
 
-```
+```yaml
 provider "aws"{
 	profile = "default"
 	region = "us-east-1"
+}
+
+resource "aws_key_pair" "example" {
+	key_name = "examplekey"
+	public_key = file("~/.ssh/terraform.pub")
 }
 
 resource "aws_instance" "example"{
@@ -289,7 +294,24 @@ resource "aws_instance" "example"{
 	provisioner "local-exec"{
 		command = "echo ${aws_instance.example.public_ip} > ip_address.txt"
 	}
+	
+	connection{
+		type = "ssh"
+		user = "ec2-user"
+		private_key = file('~/.ssh/terraform')
+		host = sel.public_ip
+	}
+	
+	provisioner "remote-exec"{
+		inline=[
+			"sudo amazon-linux-extras enable nginx1.12",
+            "sudo yum -y install nginx",
+            "sudo systemctl start nginx"
+		]
+	}
 }
+
+
 ```
 
 ```
@@ -301,3 +323,174 @@ terraform apply
 
 
 
+### 변수 정의
+
+```yaml
+variable "region"{
+	default = "us-east-1"
+}
+```
+
+- Terraform configuration에 지역 변수 정의
+- default  == 선택 사항
+
+
+
+```yaml
+provider "aws"{
+	region = var.region
+}
+```
+
+- var: 변수에 액세스 하고 있음을 알려줌
+- command line에서 변수 설정
+
+
+
+### List
+
+```yaml
+# 묵시적 정의
+variable "cidrs" { default = [] }
+
+# 명시적 정의
+variable "cidrs" { type = list }
+
+# terraform.tfvars 파일에서 목록 지정
+cdrs = [ "10.0.0.0/16", "10.1.0.0/16" ]
+```
+
+
+
+### map
+
+```yaml
+variable "amis" {
+	type = "map"
+	default - {
+		"us-east-1" = "ami-b374d5a5"
+		"us-west-2" = "ami-4b32be2b"
+	}
+}
+
+resource "aws_instance" "example"{
+	ami = var.amis[var.region]
+	instance_type = "t2.micro"
+}
+
+amis = {
+	"us-east-1" = "ami-abc123"
+	"us-west-2" = "ami-def456"
+}
+
+output "ami"{
+	value = aws_instance.example.ami
+}
+```
+
+```
+terrform apply -var region=us-west-2
+```
+
+
+
+### 출력 변수
+
+```
+output "ip"{
+	value = aws_eip.ip.public_ip
+}
+```
+
+```
+terraform apply
+terraform output ip
+```
+
+
+
+### 모듈
+
+그룹으로 관리되는 내장된 Terraform configuration 패키지
+
+- Organize onfiguration
+
+  모듈을 사용하면 configruation의 관련 부분을 함께 유지하여 configuration을 보다 쉽게 탐색, 이해 및 업데이트
+
+  논리적 구성 요소로 구성
+
+- Encapsulate configruation
+
+  configuration을 개별 논리 구성 요소로 캡슐화
+
+- Re-use onfiguration
+
+  Terraform 실무자가 작성한 configuration을 재사용하여 시간을 절약하고 비용이 많이 드는 오류를 감소
+
+- 일관성 및 모범 사례 보장
+
+```yaml
+module "consul" {
+	source = "hashicorp/consul/aws"
+	num_servers = "3"
+}
+```
+
+###### output
+
+```
+output "consul_server_asg_name" {
+	value = "${module.consul.asg_name_servers}"
+}
+```
+
+###### 삭제
+
+```
+terraform destory
+```
+
+#### Terraform 모듈
+
+단일 디렉토리에 있는 Terraform configuration 파일 세트
+
+```
+tree minimal-module/
+```
+
+> 루트 디렉토리 내에서 terraform 명령을 실행하면 해당 디렉토리의 내용이 루트 모델로 간주
+
+
+
+### State 원격 저장
+
+> 원격 백엔드 기능
+>
+> 팀 기반 워크 플로우 지원
+>
+> 상태 데이터 공유 스토리지 공간 사용 -> 동일 인프라 관리
+>
+> Terraform Cloud 사용 권장 (백엔드)
+
+Terraform Cloud Backend
+
+```yaml
+terraform {
+	backend "remote" {
+		organization = "<ORG_NAME>"
+		
+		worksapces{
+			name = "Example-Workspace"
+		}
+	}
+}
+
+#토큰 붙여넣기
+credentials "app.terraform.io" {
+	token = "REPLACE_ME"
+}
+```
+
+
+
+//13 모듈 사용 부터
