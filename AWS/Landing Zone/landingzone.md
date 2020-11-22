@@ -152,3 +152,152 @@
   >
   > 'terraform apply' 명령으로 configuration 파일 내용을 실제 배포 환경과 비교하여 변경된 내용에 따라 실제 리소스 생성
 
+
+
+### 설치
+
+> https://practice.hooniworld.io/entry/Terraform-With-Windows-%EC%84%A4%EC%B9%98
+
+```
+provider "aws" {
+ profile = "default"
+ region = "us-east-1"
+}
+
+resource "aws_instance" "example" {
+ ami = "ami-2757f631"
+ instance_type = "te.micro"
+}
+```
+
+1. provider 블록
+
+   > aws를 구성하는 데 사용
+
+   공급자: 리소스를 만들고 관리
+
+2. resource
+
+   > 인프라 정의
+
+
+
+### 명령어
+
+###### 초기화
+
+```
+terraform init
+```
+
+###### 자동 업데이트
+
+```
+terraform fmt
+```
+
+###### 모듈, 속성 이름 및 값 유형 내의 오류 확인
+
+```
+terraform valid
+```
+
+###### 변경 사항 적용
+
+```
+terraform paln
+```
+
+실행 계획 적용
+
+###### 버전 확인
+
+```
+terraform version
+```
+
+###### 변경사항적용
+
+```
+terraform apply
+```
+
+configuration에 맞게 실제 인프라를 변경하기 위해 Terraform이 수행할 작업 설명
+
+###### 현재 상태 검사
+
+```
+terraform show
+```
+
+###### 수동 상태 관리
+
+```
+terraform state
+```
+
+###### 인프라 삭제
+
+```
+terraform destory
+```
+
+
+
+##### 리소스 종속성
+
+- 여러 리소스 유형 포함
+
+
+
+###### Elastic IP 할당
+
+```
+resource "aws_eip" "ip"{
+	vpc = true
+	instance = aws_instance.example.id
+}
+```
+
+###### 비종속 리소스
+
+```
+resource "aws_instance" "another" {
+	ami = "ami-b374d5a5"
+	instance_type = "t2.micro"
+}
+```
+
+> 다른 리소스에 의존하지 않음
+
+
+
+### Provision
+
+> 인스턴스가 생성될 때 인스턴스를 초기화하는 방법
+
+```
+provider "aws"{
+	profile = "default"
+	region = "us-east-1"
+}
+
+resource "aws_instance" "example"{
+	ami = "ami-b374d5a5"
+	instance_type = "t2.micro"
+	
+	provisioner "local-exec"{
+		command = "echo ${aws_instance.example.public_ip} > ip_address.txt"
+	}
+}
+```
+
+```
+terraform init
+terraform apply
+```
+
+- local-exec provisioner 확인
+
+
+
