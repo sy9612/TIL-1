@@ -10,14 +10,6 @@
 
 
 
-:calendar: 1123
-
-- Landing Zone이란?
-
-  가상의 데이터센터 환경 구축
-
-
-
 ### Infrastructure as Code
 
 > Code Template 파일을 통해 인프라를 관리하는 프로세스
@@ -28,493 +20,203 @@
 
 
 
-# AWS CloudFormation
+## :calendar: 1123
 
-> AWS에 구축한 구성을 템플릿화 하여 재사용하기 쉽게 해주는 서비스\
+### Landing Zone(== 결정)이란?
 
-특징
+> 클라우드상에 가상의 데이터센터 환경 구축
 
-- 인프라 관리 간소화
+Account, Network, Security, Identity & Access, Users
 
-  > Auto Scaling 그룹, Elastic dload Balance 로드 밸런싱, DB 서비스 등의 리소스를 프로비저닝
+- Account --> Users
 
-- 인프라 복제
+  > 하나의 리소스의 경계
 
-- 인프라 변경 사항 손쉽게 제어 및 추적
+- Landing Zone Architecture
 
-### 템플릿
+  Well Architected Framwrok(운영, 보안, 안정성, 성능, 비용) 고려
 
-- JSON, YAML 형식의 텍스트 파일
+- 랜딩존 결정 시 도전 사항
 
-  > .json .yaml .template .txt
+  - 디자인 의사 결정
 
-- AWS 리소스 구축을 위한 블루프린트
+    > 고객의 의사에 맞춰
 
-```json
-{
-  "AWSTemplateFormatVersion" : "2010-09-09",
-  "Description" : "A sample template",
-  "Resources" : {
-    "MyEC2Instance" : {
-      "Type" : "AWS::EC2::Instance",
-      "Properties" : {
-        "ImageId" : "ami-0ff8a91507f77f867",
-        "InstanceType" : "t2.micro",
-        "KeyName" : "testkey",
-        "BlockDeviceMappings" : [
-          {
-            "DeviceName" : "/dev/sdm",
-            "Ebs" : {
-              "VolumeType" : "io1",
-              "Iops" : "200",
-              "DeleteOnTermination" : "false",
-              "VolumeSize" : "20"
-            }
-          }
-        ]
-      }
-    }
-  }
-}
-```
+  - 멀티 어카운트 & 서비스
 
-### Stack
+  - 보안 베이스라인 및 거버넌스 수립
 
-> 리소스 관리 단위
+#### AWS Account
 
-- 스택 생성, 업데이트, 삭제하여 리소스 모음을 생성, 업데이트 및 삭제
+A 계정에서 B로 옮길 때 migration밖에 없음
 
-구조
+- 보안/리소스 경계
 
-- 1. AWSTemplateFormationVersion
+- API Limits / Throttling
 
-     템플릿 버전
+  > Account는 limits의 단위
 
-  2. Description
+- **빌링 분리**
 
-     템플릿 설명, 사용자를 위함
+  > 결제 주체
 
-  3. Parameters
+###### Multi Account가 필요한 이유
 
-     스택 생성시 넘겨줄 파라미터
+- 관리 주체가 다를 때(빌링 구분)
+- Stack 분리
+- 비즈니스 프로세스
+- 보안 / 컴플라이언스 통제 항목
 
-     Ref 함수로 참조
+##### 필요한 Account
 
-     Outputs와 조합하여 템플릿끼리 연결
+- 로깅, 보안, 네트워크(하나의 네트워크에서 최대 15z 영역 구분), 공유 서비스, 빌링, 샌드박스(완전 자유), 개발, Pre-Prod, Prod, 기타
 
-  4. Mappings
+  각각 account 필요
 
-     키, 값 쌍으로 설정
+###### 고려사항
 
-     리전마다 사용할 AMI를 다르게 하는 경우에 사용
+- **잠금**
+  - 관리해야하는 계정의 수 증가
+  - 계정 OTP 변환이 어려움 --> 하드웨어 OTP 구매 필요
+- Federate
+- 활성화
+  - 거버넌스 설정
+- 수립
+- **정의**
+  - 계정의 이용자 정의
+- 식별
 
-  5. Resources
+##### 네트워크 고려사항
 
-     생성할 자원들 정의
+- VPC, CIDR
+  - Accout :arrow_up: VPC 개수 :arrow_up:
+- Subnet
+- IDC
+- 인터넷 연결
+- vpc간 연계
+- Network 보안
 
-  6. Outputs
+#### Landing Zone Solution
 
-     생성한 것의 결과 출력
-
-     VPC, SecurityGroup, EC2 인스턴스, ELB IP 등
-
-#### StackSets
-
-> 단일 작업으로 여러 계정 및 리전에 대해 스택 생성, 업데이트, 삭제할 수 있도록 스택의 기능 확장
+> 보안 구조 :o: (네트워크 :x:)
 >
-> 작업이 수행될 리전의 순서, 스택 작업이 중단되는 내결함성, 스택에 대해 동시에 수행될 수 있는 계정 수등 기본 설정 지정 가능
+> 신규 AWS 멀티 어카운트 환경의 설정을 자동화하는 손쉽게 배포 가능한 솔루션
 
+- AWS 모범 사례 및 권장 사항 기반, 초기 보안 및 거버넌스 통제, 어카운트 베이스라인 및 어카운트 벤딩 머신, 자동 배포
 
+  - 운영/검증 환경 :arrow_right: 철저하게 거버넌스 통제 필요
 
+  - 개발 :arrow_right: 필요할 때마다 생성 필요
 
+    - 베이스라인 가이드라인: 베이스라인 내에서 Account의 자율성 제공
+    - 어카운트 벤딩 머신: 자유롭게 새로운 Account 복제 :o:
 
-# Terraform
+  - 자동 배포
 
-> Infrastructure as Code 도구
->
-> 안전하고 반복 가능한 방식으로 인프라를 구축, 변경 및 관리하기 위한 도구
->
-> 사람이 읽을 수 있는 자동화 된 배포를 위해 HCL(HashiCorp Configuration Language) 구성 언어로 환경 관리
+    > 위의 모든 사례를 포함
 
-**장점**
+- CloudFormation으로 Landing Zone 제공
 
-1. #### 플랫폼 중립접(Platform Agnostic)
+###### Naming & Tagging
 
-   > 프로젝트 또는 조직의 요구에 맞는 configuration 파일 작성하여 동일한 workflow로 이기종 환경 관리
+> 리소스에 할당할 Naming과 분류할 Tagging 정의
 
-2. #### 상태 관리
+###### Best Practice
 
-   > 프로젝트가 처음 초기화 될 때 상태 파일 생성
-   >
-   > 로컬 상태를 사용하여 계획을 작성하고 인프라 변경
+1. 용도별 Account 분리
+2. Account에 대한 Organiztion 구성
+3. OU 활용한 Account별 권한 제어
+4. 로그 활성화
+5. Config 및 Config Rule 활성화
+6. ...
 
-3. #### 운영자 신뢰
+#### Cloud Formation
 
-   > workflow는 사용자가 쉽게 반복 가능한 작업을 수행하고 Terraform이 취한 조치로 인해 환경이 중단되지 않도록 계회 단계 계획
+- Master Organizations Account
 
+  - manifest file 업로드 (S3)
+  - CodePipeline
+    - Account Baseline
+    - AWS Service Catalog
+      - AWS 벤딩 머신을 제공
+    - Parameter store
+  - AWS Organizations
+    - 구조를 잡아줌 (배포)
+    - Core OU
+  - **SSO**
+    - Core Account의 root 권한을 할당
+    - 나머지 account IAM rule 할당
 
+- Core Account
 
-### WorkFlow
+   :exclamation: **root** account가 존재하지 않음
 
-- Scope
+  - Shared Service(VPC 생성:o:), Log Archive, Security Account 생성
 
-  > 특정 프로젝트에 필요한 리소스 확인
+  - GuardDuty Master: Service형 Master
 
-- Author
+    > 각 Account를 enable 하면 각 프로그램들을 모니터링(로그 수집) :point_right: 한 곳으로 모임
 
-  > Scope이 지정된 매개변수를 기바능로 HCL을 사용해 configuration 파일 작성
+- Network Account :point_right: CloudFormation으로 따로 생성
+  - Core에 포함 :x:
+  - 생성 방법
+    1. Accoutn 벤딩 머신
+    2. **Core Account에 삽입**
 
-- Initialize
+#### AWS Organizations
 
-  > configuration 파일이 있는 프로젝트 디렉토리에서 **'terraform init' 명령** 실행
-  >
-  > 적합한 플러그인 다운로드
+> 여러 AWS 계정을 중앙에서 통합 관리하는 계정 관리 서비스
 
-- Plan & Apply
+- Service Control Policy 적용 (Organizations 구조)
 
-  > 'terraform plan' 명령을 통해 생성 프로세스 확인
-  >
-  > 'terraform apply' 명령으로 configuration 파일 내용을 실제 배포 환경과 비교하여 변경된 내용에 따라 실제 리소스 생성
+  > 어떤 기능을 사용할 수 있도록 할 것인지
 
+- baseline으로 설정한 보안 규칙 정의 :point_right: Landing zone이 모두 해줌!
 
+  :custard: Custom 가능
 
-### 설치
+  - Logging(Cloud Trail)
 
-> https://practice.hooniworld.io/entry/Terraform-With-Windows-%EC%84%A4%EC%B9%98
+    > Lambda로만 가능 :point_right: Landing zone에서 Lambda 자동 생성
 
-```yaml
-provider "aws" {
- profile = "default"
- region = "us-east-1"
-}
+  - :custard: Config Governance(Config, Config Rule)
 
-resource "aws_instance" "example" {
- ami = "ami-2757f631"
- instance_type = "te.micro"
-}
-```
+  - Security (GuardDuty)
 
-1. provider 블록
+  - :custard: 통합 계정 관리(SSO, RBAC 기반 user 정의)
 
-   > aws를 구성하는 데 사용
+#### Code
 
-   공급자: 리소스를 만들고 관리
+1. Landing zone code
 
-2. resource
+2. IAM Policy Syntex(구문)
 
-   > 인프라 정의
+   - SCP
+   - config 정보를 중간에 모음 (add-on)
+   - TGW(Transit GateWay)
+     - 다른 계정과 Share하는 add-on
 
+3. Cloud formation Syntex
 
+   :exclamation: 제약조건
 
-### 명령어
+   - 크기
+   - 변수 길이
 
-###### 초기화
 
-```
-terraform init
-```
 
-###### 자동 업데이트
+##### 기타
 
-```
-terraform fmt
-```
+###### AWS Control Tower
 
-###### 모듈, 속성 이름 및 값 유형 내의 오류 확인
+> 랜딩 영역의 설정을 자동화
 
-```
-terraform valid
-```
+###### AWS Terraform Ladning Zone
 
-###### 변경 사항 적용
+> AWS 벤딩 머신이 구현되어있지 않음
 
-```
-terraform paln
-```
 
-실행 계획 적용
 
-###### 버전 확인
+**클라우드 엔지니어**
 
-```
-terraform version
-```
-
-###### 변경사항적용
-
-```
-terraform apply
-```
-
-configuration에 맞게 실제 인프라를 변경하기 위해 Terraform이 수행할 작업 설명
-
-###### 현재 상태 검사
-
-```
-terraform show
-```
-
-###### 수동 상태 관리
-
-```
-terraform state
-```
-
-###### 인프라 삭제
-
-```
-terraform destory
-```
-
-
-
-##### 리소스 종속성
-
-- 여러 리소스 유형 포함
-
-
-
-###### Elastic IP 할당
-
-```yaml
-resource "aws_eip" "ip"{
-	vpc = true
-	instance = aws_instance.example.id
-}
-```
-
-###### 비종속 리소스
-
-```yaml
-resource "aws_instance" "another" {
-	ami = "ami-b374d5a5"
-	instance_type = "t2.micro"
-}
-```
-
-> 다른 리소스에 의존하지 않음
-
-
-
-### Provision
-
-> 인스턴스가 생성될 때 인스턴스를 초기화하는 방법
-
-```yaml
-provider "aws"{
-	profile = "default"
-	region = "us-east-1"
-}
-
-resource "aws_key_pair" "example" {
-	key_name = "examplekey"
-	public_key = file("~/.ssh/terraform.pub")
-}
-
-resource "aws_instance" "example"{
-	ami = "ami-b374d5a5"
-	instance_type = "t2.micro"
-	
-	provisioner "local-exec"{
-		command = "echo ${aws_instance.example.public_ip} > ip_address.txt"
-	}
-	
-	connection{
-		type = "ssh"
-		user = "ec2-user"
-		private_key = file('~/.ssh/terraform')
-		host = sel.public_ip
-	}
-	
-	provisioner "remote-exec"{
-		inline=[
-			"sudo amazon-linux-extras enable nginx1.12",
-            "sudo yum -y install nginx",
-            "sudo systemctl start nginx"
-		]
-	}
-}
-
-
-```
-
-```
-terraform init
-terraform apply
-```
-
-- local-exec provisioner 확인
-
-
-
-### 변수 정의
-
-```yaml
-variable "region"{
-	default = "us-east-1"
-}
-```
-
-- Terraform configuration에 지역 변수 정의
-- default  == 선택 사항
-
-
-
-```yaml
-provider "aws"{
-	region = var.region
-}
-```
-
-- var: 변수에 액세스 하고 있음을 알려줌
-- command line에서 변수 설정
-
-
-
-### List
-
-```yaml
-# 묵시적 정의
-variable "cidrs" { default = [] }
-
-# 명시적 정의
-variable "cidrs" { type = list }
-
-# terraform.tfvars 파일에서 목록 지정
-cdrs = [ "10.0.0.0/16", "10.1.0.0/16" ]
-```
-
-
-
-### map
-
-```yaml
-variable "amis" {
-	type = "map"
-	default - {
-		"us-east-1" = "ami-b374d5a5"
-		"us-west-2" = "ami-4b32be2b"
-	}
-}
-
-resource "aws_instance" "example"{
-	ami = var.amis[var.region]
-	instance_type = "t2.micro"
-}
-
-amis = {
-	"us-east-1" = "ami-abc123"
-	"us-west-2" = "ami-def456"
-}
-
-output "ami"{
-	value = aws_instance.example.ami
-}
-```
-
-```
-terrform apply -var region=us-west-2
-```
-
-
-
-### 출력 변수
-
-```
-output "ip"{
-	value = aws_eip.ip.public_ip
-}
-```
-
-```
-terraform apply
-terraform output ip
-```
-
-
-
-### 모듈
-
-그룹으로 관리되는 내장된 Terraform configuration 패키지
-
-- Organize onfiguration
-
-  모듈을 사용하면 configruation의 관련 부분을 함께 유지하여 configuration을 보다 쉽게 탐색, 이해 및 업데이트
-
-  논리적 구성 요소로 구성
-
-- Encapsulate configruation
-
-  configuration을 개별 논리 구성 요소로 캡슐화
-
-- Re-use onfiguration
-
-  Terraform 실무자가 작성한 configuration을 재사용하여 시간을 절약하고 비용이 많이 드는 오류를 감소
-
-- 일관성 및 모범 사례 보장
-
-```yaml
-module "consul" {
-	source = "hashicorp/consul/aws"
-	num_servers = "3"
-}
-```
-
-###### output
-
-```
-output "consul_server_asg_name" {
-	value = "${module.consul.asg_name_servers}"
-}
-```
-
-###### 삭제
-
-```
-terraform destory
-```
-
-#### Terraform 모듈
-
-단일 디렉토리에 있는 Terraform configuration 파일 세트
-
-```
-tree minimal-module/
-```
-
-> 루트 디렉토리 내에서 terraform 명령을 실행하면 해당 디렉토리의 내용이 루트 모델로 간주
-
-
-
-### State 원격 저장
-
-> 원격 백엔드 기능
->
-> 팀 기반 워크 플로우 지원
->
-> 상태 데이터 공유 스토리지 공간 사용 -> 동일 인프라 관리
->
-> Terraform Cloud 사용 권장 (백엔드)
-
-Terraform Cloud Backend
-
-```yaml
-terraform {
-	backend "remote" {
-		organization = "<ORG_NAME>"
-		
-		worksapces{
-			name = "Example-Workspace"
-		}
-	}
-}
-
-#토큰 붙여넣기
-credentials "app.terraform.io" {
-	token = "REPLACE_ME"
-}
-```
-
-
-
-//13 모듈 사용 부터
+>  App 엔지니어 + 인프라 엔지니어
