@@ -26,6 +26,11 @@
 
 
 
+- 구축까지는 테라폼
+- 이후 관리는 콘솔에서 함
+
+
+
 ### WorkFlow
 
 - Scope
@@ -54,6 +59,10 @@
 
 > https://practice.hooniworld.io/entry/Terraform-With-Windows-%EC%84%A4%EC%B9%98
 
+> 사용법 https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc
+
+vpc -> subnet -> gateway
+
 ```yaml
 provider "aws" {
  profile = "default"
@@ -75,6 +84,22 @@ resource "aws_instance" "example" {
 2. resource
 
    > 인프라 정의
+
+
+
+- 리눅스 설치
+
+  >  mv terraform /usr/local/bin/
+  >
+  > ls -alh /usr/local/bin/terraform
+
+  - 폴더 생성해서 실행
+
+    provider.tf
+
+    > project directory 별로 설정
+    >
+    > access_key, secret_key, region 설정 --> AWS CLI에서 별칭을 설정해서 사용 가능
 
 
 
@@ -165,6 +190,33 @@ resource "aws_instance" "another" {
 ```
 
 > 다른 리소스에 의존하지 않음
+
+
+
+### VPC 설정
+
+```yaml
+resource "aws_vpc" "main" {
+  cidr_block       = "10.0.0.0/16"
+  instance_tenancy = "default"
+
+  tags = {
+    Name = "main"
+  }
+}
+```
+
+
+
+### EC2 Instance
+
+> resoucre로 생성
+>
+> key 관리는 콘솔에서 생성하는 것이 편함
+
+
+
+
 
 
 
@@ -386,7 +438,3 @@ credentials "app.terraform.io" {
 	token = "REPLACE_ME"
 }
 ```
-
-
-
-//13 모듈 사용 부터
