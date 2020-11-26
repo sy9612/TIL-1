@@ -458,3 +458,15 @@ credentials "app.terraform.io" {
   > https://brunch.co.kr/@topasvga/780
   >
   > 영역 생성 https://teichae.tistory.com/entry/Terraform%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-VPC-%EB%B0%8F-Subnet-Routing-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0
+
+- ALB 생성
+
+  > https://rampart81.github.io/post/lb_terraform/
+
+
+
+#### 에러
+
+:rotating_light: This module is not yet installed. Run "terraform init" to install all modules required by this configuration.
+
+> terraform init 실행
