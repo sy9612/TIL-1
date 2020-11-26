@@ -89,7 +89,7 @@ resource "aws_instance" "example" {
 
 - 리눅스 설치
 
-  >  mv terraform /usr/local/bin/
+  >  mv terraform /usr/bin/
   >
   > ls -alh /usr/local/bin/terraform
 
@@ -438,3 +438,25 @@ credentials "app.terraform.io" {
 	token = "REPLACE_ME"
 }
 ```
+
+
+
+
+
+### 실행
+
+- xshell 연결
+
+  > https://zzdd1558.tistory.com/202
+
+- terraform on EC2
+
+  > http://blog.naver.com/PostView.nhn?blogId=alice_k106&logNo=221489260596&parentCategoryNo=7&categoryNo=&viewDate=&isShowPopularPosts=true&from=search
+
+  terraform 파일을 /usr/bin에 옮겨야 한다
+
+- vpc 생성
+
+  > https://brunch.co.kr/@topasvga/780
+  >
+  > 영역 생성 https://teichae.tistory.com/entry/Terraform%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-VPC-%EB%B0%8F-Subnet-Routing-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0
