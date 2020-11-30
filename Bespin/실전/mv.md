@@ -97,4 +97,4 @@ no-reboot
 질문
 
 1. rpt == ers?
-2. push == account?
+2. push == notification?
