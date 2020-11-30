@@ -91,3 +91,10 @@ no-reboot
 > https://docs.aws.amazon.com/ko_kr/IAM/latest/UserGuide/troubleshoot_iam-ec2.html#troubleshoot_iam-ec2_missingrole
 >
 > 걍 프로파일 선택하면 됨
+
+
+
+질문
+
+1. rpt == ers?
+2. push == account?
