@@ -467,6 +467,10 @@ credentials "app.terraform.io" {
 
   > https://rampart81.github.io/post/lb_terraform/
 
+- Security Group 설정
+
+  > https://rampart81.github.io/post/security_group_terraform/
+
 
 
 #### 에러
@@ -474,3 +478,11 @@ credentials "app.terraform.io" {
 :rotating_light: This module is not yet installed. Run "terraform init" to install all modules required by this configuration.
 
 > terraform init 실행
+
+
+
+
+
+#### :grey_question:
+
+- ${aws_subnet.name.id}와 aws_subnet.name.id 차이점
