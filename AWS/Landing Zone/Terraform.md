@@ -443,6 +443,10 @@ credentials "app.terraform.io" {
 
 ### 실행
 
+- terraform 예시
+
+  > https://www.44bits.io/ko/post/terraform_introduction_infrastrucute_as_code
+
 - xshell 연결
 
   > https://zzdd1558.tistory.com/202
