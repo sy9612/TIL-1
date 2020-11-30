@@ -98,3 +98,4 @@ no-reboot
 
 1. rpt == ers?
 2. push == notification?
+3. gcsp back 생성 중 오류 -> 스토리지 크기가 명세서와 맞지 않음
