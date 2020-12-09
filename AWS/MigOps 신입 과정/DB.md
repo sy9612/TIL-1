@@ -23,6 +23,17 @@
 
 - NoSQL
 - Scale out
+- No Table Size
 
 ### Redshift
 
+- Relational data warehouse
+- 페타바이트 scale
+- fast
+- simple
+
+
+
+### AWS Schema Conversion Tool (AWS SCT)
+
+- Database 스키마와 코드를 자동으로 migration 하는 것을 도와주는 툴
