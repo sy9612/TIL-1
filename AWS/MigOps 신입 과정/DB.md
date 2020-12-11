@@ -133,3 +133,10 @@
 - 빠른 장애 조치 :o:
 
 - 스토리지 관리 단순화
+
+
+
+# DynamoDB
+
+- NoSQL
+- Key-Value
