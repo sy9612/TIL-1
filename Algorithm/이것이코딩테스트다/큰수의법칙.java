@@ -1,9 +1,8 @@
-package 이것이코딩테스트다;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class 큰수의법칙 {
+public class ū���ǹ�Ģ {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();

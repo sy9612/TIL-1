@@ -1,8 +1,7 @@
-package 이것이코딩테스트다;
 
 import java.util.Scanner;
 
-public class 럭키스트레이트 {
+public class ��Ű��Ʈ����Ʈ {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String N = sc.next();

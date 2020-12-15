@@ -1,10 +1,8 @@
-package ì´ê²ƒì´ì½”ë”©í…ŒìŠ¤íŠ¸ë‹¤;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class ë¬¸ìì—´ì¬ì •ë ¬ {
+public class ¹®ÀÚ¿­ÀçÁ¤·Ä {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String N = sc.next();

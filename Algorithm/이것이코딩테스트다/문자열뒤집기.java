@@ -1,13 +1,12 @@
-package ì´ê²ƒì´ì½”ë”©í…ŒìŠ¤íŠ¸ë‹¤;
 
 import java.util.Scanner;
 
 /**
- * í•˜ë‚˜ì˜ ë¬¸ìì—´ Sì— ìˆëŠ” ëª¨ë“  ìˆ«ìë¥¼ ê°™ê²Œ
+ * ÇÏ³ªÀÇ ¹®ÀÚ¿­ S¿¡ ÀÖ´Â ¸ğµç ¼ıÀÚ¸¦ °°°Ô
  * @author 15com
  *
  */
-public class ë¬¸ìì—´ë’¤ì§‘ê¸° {
+public class ¹®ÀÚ¿­µÚÁı±â {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String S = sc.next();

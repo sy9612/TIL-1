@@ -1,14 +1,13 @@
-package ì´ê²ƒì´ì½”ë”©í…ŒìŠ¤íŠ¸ë‹¤;
 
 import java.util.Arrays;
 import java.util.Scanner;
 /**
- * Nê°œì˜ ê°œìˆ˜ë§Œí¼ ìˆ«ìê°€ ì£¼ì–´ì¡Œì„ ë•Œ, ë§Œë“¤ ìˆ˜ ì—†ëŠ” ìµœì†Œ ìˆ«ì ì°¾ê¸°
- * sort í›„ ì•ì—ì„œë¶€í„° ìˆ«ìë¥¼ ë”í•´ì„œ target ì„¤ì •
+ * N°³ÀÇ °³¼ö¸¸Å­ ¼ıÀÚ°¡ ÁÖ¾îÁ³À» ¶§, ¸¸µé ¼ö ¾ø´Â ÃÖ¼Ò ¼ıÀÚ Ã£±â
+ * sort ÈÄ ¾Õ¿¡¼­ºÎÅÍ ¼ıÀÚ¸¦ ´õÇØ¼­ target ¼³Á¤
  * @author 15com
  *
  */
-public class ë§Œë“¤ìˆ˜ì—†ëŠ”ê¸ˆì•¡ {
+public class ¸¸µé¼ö¾ø´Â±İ¾× {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N =sc.nextInt();

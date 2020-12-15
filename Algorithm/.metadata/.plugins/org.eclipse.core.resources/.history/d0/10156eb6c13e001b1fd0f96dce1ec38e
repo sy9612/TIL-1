@@ -1,8 +1,7 @@
-package BAEKJOON;
 
 import java.util.Scanner;
 
-public class RBGê±°ë¦¬_1149 {
+public class RBG°Å¸®_1149 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
