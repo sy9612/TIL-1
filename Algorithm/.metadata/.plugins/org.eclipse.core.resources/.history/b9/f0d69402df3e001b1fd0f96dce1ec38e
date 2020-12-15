@@ -1,0 +1,29 @@
+/**
+ * https://programmers.co.kr/learn/courses/30/lessons/60059?language=python3
+ * @author 15com
+ *
+ */
+public class ÀÚ¹°¼è¿Í¿­¼è {
+	public static void main(String[] args) {
+		int[][] key = {
+				{0, 0, 0},
+				{1, 0, 0},
+				{0, 1, 1}
+		};
+		int[][] lock = {
+				{1, 1, 1},
+				{1, 1, 0},
+				{1, 0, 1}
+		};
+		
+		boolean answer = false;
+		
+		int[][] map = new int[lock.length * 3][lock.length * 3];
+		
+		for (int i = lock.length/3; i < lock.length/3 + lock.length; i++) {
+			for (int j = lock.length/3; j < lock.length/3 + lock.length; j++) {
+				
+			}
+		}
+	}
+}

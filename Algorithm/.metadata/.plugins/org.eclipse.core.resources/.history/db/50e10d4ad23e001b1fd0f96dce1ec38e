@@ -1,0 +1,15 @@
+import java.util.Scanner;
+
+/**
+ * https://programmers.co.kr/learn/courses/30/lessons/60059
+ * @author 15com
+ *
+ */
+public class ÀÚ¹°¼è¿Í¿­¼è {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		
+			
+	}
+}

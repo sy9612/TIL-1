@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @author 15com
  *
  */
-public class 문자열압축 {
+public class 문자열압축{
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String s = sc.next();
