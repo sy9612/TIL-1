@@ -1,12 +1,12 @@
 
 import java.util.Scanner;
 
-public class °ÔÀÓ°³¹ß {
+public class ê²Œìž„ê°œë°œ {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int[][] map = new int[sc.nextInt()][sc.nextInt()];
 
-		// 0ºÏ 1µ¿ 2³² 3¼­
+		// 0ï¿½ï¿½ 1ï¿½ï¿½ 2ï¿½ï¿½ 3ï¿½ï¿½
 		int[] dr = { -1, 0, 1, 0 };
 		int[] dc = { 0, 1, 0, -1 };
 		

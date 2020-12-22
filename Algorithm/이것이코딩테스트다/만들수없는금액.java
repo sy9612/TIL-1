@@ -2,12 +2,12 @@
 import java.util.Arrays;
 import java.util.Scanner;
 /**
- * N°³ÀÇ °³¼ö¸¸Å­ ¼ýÀÚ°¡ ÁÖ¾îÁ³À» ¶§, ¸¸µé ¼ö ¾ø´Â ÃÖ¼Ò ¼ýÀÚ Ã£±â
- * sort ÈÄ ¾Õ¿¡¼­ºÎÅÍ ¼ýÀÚ¸¦ ´õÇØ¼­ target ¼³Á¤
+ * Nï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
+ * sort ï¿½ï¿½ ï¿½Õ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ target ï¿½ï¿½ï¿½ï¿½
  * @author 15com
  *
  */
-public class ¸¸µé¼ö¾ø´Â±Ý¾× {
+public class ë§Œë“¤ìˆ˜ì—†ëŠ”ê¸ˆì•¡ {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N =sc.nextInt();

@@ -2,11 +2,11 @@
 import java.util.Scanner;
 
 /**
- * ÇÏ³ªÀÇ ¹®ÀÚ¿­ S¿¡ ÀÖ´Â ¸ğµç ¼ıÀÚ¸¦ °°°Ô
+ * ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ Sï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½
  * @author 15com
  *
  */
-public class ¹®ÀÚ¿­µÚÁı±â {
+public class ë¬¸ìì—´ë’¤ì§‘ê¸° {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String S = sc.next();

@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author 15com
  *
  */
-public class ÀÚ¹°¼è¿Í¿­¼è {
+public class ìë¬¼ì‡ ì™€ì—´ì‡  {
 	public static void main(String[] args) {
 		int[][] key = { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 1, 1 } };
 		int[][] lock = { { 1, 1, 1 }, { 1, 1, 0 }, { 1, 0, 1 } };

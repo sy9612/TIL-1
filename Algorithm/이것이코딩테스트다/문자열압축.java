@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
 /**
- * https://programmers.co.kr/learn/courses/30/lessons/60057 ¹®ÀÚ¿­¾ĞÃà ¸ğµç °æ¿ìÀÇ ¼ö¸¦ »ı°¢ÇÏ¿©
- * ¿ÏÀü Å½»ö ¼öÇà
+ * https://programmers.co.kr/learn/courses/30/lessons/60057 ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
  * 
  * @author 15com
  *
  */
-public class ¹®ÀÚ¿­¾ĞÃà{
+public class ë¬¸ìì—´ì••ì¶•{
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String s = sc.next();

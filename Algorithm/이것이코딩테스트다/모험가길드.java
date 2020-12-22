@@ -3,12 +3,12 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * °øÆ÷µµ <= ¸ğÇè°¡ ¼ö
- * ¿À¸§Â÷¼øÀ¸·Î ÀÛÀº °ÍºÎÅÍ Á¶°Ç¿¡ ¼º¸³ÇÏ´Â Áö ÁøÇà
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ <= ï¿½ï¿½ï¿½è°¡ ï¿½ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Íºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
  * @author 15com
  *
  */
-public class ¸ğÇè°¡±æµå {
+public class ëª¨í—˜ê°€ê¸¸ë“œ {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class RGB°Å¸®_1149 {
+public class RGBê±°ë¦¬_1149 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();

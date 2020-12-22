@@ -1,0 +1,55 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class 평범한배낭_12865 {
+	
+	static class Node{
+		int W;
+		int K;
+		
+		Node(int W, int K){
+			this.W = W;
+			this.K = K;
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int K = sc.nextInt();
+		
+		
+//		ArrayList<Node> al = new ArrayList<>();
+		int[] W = new int[N];
+		int[] K = new int[N];
+		
+		
+		for (int i = 0; i < N; i++) {
+//			al.add(new Node(sc.nextInt(), sc.nextInt()));
+			W[i] = sc.nextInt();
+			K[i] = sc.nextInt();
+		}
+		
+		for(int i=0; i< (1 << arr.length); i++) {
+			// i에 대해서, A가 선택된지 여부: 1<< 0 미룬 것과 i를 마스킹해서 0인지 아닌지 검사
+			//			B가 선택된지 여부: 1<< 1 미룬 것과 i를 마스킹해서 0인지 아닌지 검사
+			//			C가 선택된지 여부: 1<< 2 미룬 것과 i를 마스킹해서 0인지 아닌지 검사
+			int sum = 0;
+			for(int j=0; j<arr.length; j++) {
+				if( (i & (1 << j)) != 0 ) {
+					//j번째 원소 선택
+					sum += nums[j];
+				}
+				
+			}
+			if(sum == 0) {
+				for(int j=0; j<arr.length; j++) {
+					if((i&(1<<j))!=0)
+						System.out.print(arr[j]);
+				}
+			}			
+			System.out.print(" ");
+		}
+		
+	}
+}
