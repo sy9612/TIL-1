@@ -1,0 +1,49 @@
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class 가운데를말해요_1655 {
+	
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int N = sc.nextInt();
+
+		
+		PriorityQueue<Integer> up = new PriorityQueue<>();
+		PriorityQueue<Integer> down = new PriorityQueue<>();
+		
+		int middle = sc.nextInt();
+		System.out.println(middle);
+		
+		up.add(middle);
+		
+		for (int i = 1; i < N; i++) {
+			int buf = sc.nextInt();
+			
+			if(up.size() > down.size()) {
+				down.add(buf);
+			}
+			else {
+				up.add(buf);
+			}
+			
+			if(up.get(0) < down.get(down.size()-1)) {
+				int tmp1 = up.get(0);
+				int tmp2 = down.get(down.size()-1);
+				up.remove(0);
+				down.remove(down.size()-1);
+				up.add(tmp2);
+				down.add(tmp1);
+			}
+			
+			if(up.size() <= down.size())
+				System.out.println(down.get(down.size()-1));
+			else
+				System.out.println(up.get(0));
+			
+		}
+		
+		
+	}
+}

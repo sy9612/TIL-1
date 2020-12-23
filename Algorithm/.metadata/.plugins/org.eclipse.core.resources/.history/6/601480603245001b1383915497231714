@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class 백조의호수_3197 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int R = sc.nextInt();
+		int C = sc.nextInt();
+		
+		String[][] map = new String[R][C];
+		
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				map[i][j] = sc.next();
+			}
+		}
+	}
+}

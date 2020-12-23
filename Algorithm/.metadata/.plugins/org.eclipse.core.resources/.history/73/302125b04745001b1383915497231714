@@ -1,0 +1,105 @@
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+/**
+ * 하나의 반복문 안에서 이중 BFS
+ * 
+ * @author 15com
+ *
+ */
+
+public class 백조의호수_3197 {
+	static class Node {
+		int r;
+		int c;
+
+		Node(int r, int c) {
+			this.r = r;
+			this.c = c;
+		}
+	}
+
+	static int[] dr = { 0, 0, 1, -1 };
+	static int[] dc = { 1, -1, 0, 0 };
+	static boolean meet = false;
+	private static char[][] map;
+	static boolean swan_check[][];
+	static boolean water_check[][];
+	static Queue<Node> swan;
+	static Queue<Node> water;
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int R = sc.nextInt();
+		int C = sc.nextInt();
+
+		map = new char[R][C];
+		
+		swan_check = new boolean[R][C];
+		water_check = new boolean[R][C];
+
+		swan = new LinkedList<>();
+		water = new LinkedList<>();
+		
+		Node last = null;
+		for (int i = 0; i < R; i++) {
+			String buf = sc.next();
+			for (int j = 0; j < C; j++) {
+				map[i][j] = buf.charAt(j);
+				if (map[i][j] != 'X') {
+					water.add(new Node(i,j));
+				}
+				if (map[i][j] == 'L') {
+					last = new Node(i, j);
+				}
+			}
+		}
+
+		int result = 0;
+		
+		swan.add(last);
+		swan_check[last.r][last.c] = true; 
+
+		while (!meet) {
+			swan_bfs();
+			if(meet)
+				break;
+			water_bfs();
+			result++;
+		}
+		
+		System.out.println(result);
+
+	}
+	
+	private static void swan_bfs() {
+		// TODO Auto-generated method stub
+		while(!swan.isEmpty()) {
+			Node buf = swan.poll();
+			for (int d = 0; d < 4; d++) {
+				int cr = buf.r + dr[d];
+				int cc = buf.c + dc[d];
+				
+				if(cr < 0 || cc < 0 || cr >= map.length || cc >= map[0].length)
+					continue;
+				
+				if(map[cr][cc] == 'L')
+				{
+					meet = true;
+					return;
+				}
+				
+			}
+		}
+	}
+
+	private static void water_bfs() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+}
