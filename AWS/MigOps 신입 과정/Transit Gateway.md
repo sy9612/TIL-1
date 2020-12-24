@@ -4,3 +4,10 @@
 
 ![image-20201223173117430](..\image\image-20201223173117430.png)
 
+> https://brunch.co.kr/@topasvga/827
+
+1. Transit Gateway 생성
+2. Attachment 생성
+
+
+
