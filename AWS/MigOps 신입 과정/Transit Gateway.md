@@ -25,6 +25,3 @@
    - Propagation
 
      > 모든 attachment는 Propagation됨
-
-
-
