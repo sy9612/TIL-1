@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+/**
+ * 백준
+ * @author 15com
+ *
+ */
+public class 뱀_3190 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int N =sc.nextInt();
+		int K = sc.nextInt();
+		int[] apple = new int[K];
+	}
+}

@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class 암호제작_1837 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		long P = sc.nextInt();
+		long K = sc.nextInt();
+	
+		long i;
+		for (i = 2; i < P; i++) {
+		
+			if( P % i == 0) {
+				System.out.println("BAD " + i);
+				break;
+			}
+		
+		}
+		
+		if()
+				
+				
+	}
+	
+}
