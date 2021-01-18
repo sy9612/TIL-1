@@ -1,0 +1,8 @@
+import java.util.Scanner;
+
+public class 수찾기_1920 {
+	 public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = 
+	}
+}
