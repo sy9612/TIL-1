@@ -220,3 +220,36 @@ A 계정에서 B로 옮길 때 migration밖에 없음
 **클라우드 엔지니어**
 
 >  App 엔지니어 + 인프라 엔지니어
+
+
+
+
+
+# Landing Zone - blog
+
+-   클라우드 환경 구현을 위한 시작점
+-   AWS, Azure, GCP 등 클라우드 환경으로 이전(Migration)할 때, 토대를 구축하는 것
+
+#### AWS의 Landing Zone
+
+-   안전한 멀티 어카운트 AWS 환경 제공
+-   멀티 어카운트 환경을 만드는 노력 최소화, 안전한 환경 구성
+
+### Landing Zone 결정 요구사항
+
+-   Acoount
+    
+    하나의 리소스 경계
+    
+    -   Multi Account
+        -   관리 주체가 다를 때 (빌링 구분)
+        -   Stack 분리
+        -   비즈니스 프로세스
+        -   보안 / 컴플라이언스 통제 항목
+-   Network
+    
+-   **Security**
+    
+-   Idnetity & Access
+    
+-   Users
