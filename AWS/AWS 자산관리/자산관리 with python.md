@@ -86,8 +86,108 @@ pip list
 
 ![image-20210118172332714](..\image\image-20210118172332714.png)
 
-- AWS Access Key ID
-- AWS Secret Access Key
-- Default region name: 지역을 설정해준다.
-  - ap-northeast-2 == 서울
-- Default output format: 기본 format을 지정해준다.
+- 기본 설정
+
+  | AWS Access Key ID | AWS Secret Acess Key | Default region name        | Default output foramt |
+  | ----------------- | -------------------- | -------------------------- | --------------------- |
+  | 액세스 키 ID 입력 | 액세스 키 PW 입력    | 기본 지역 설정             | 기본 포맷 설정        |
+  |                   |                      | ap-northeadst-2: 서울 리전 |                       |
+
+  
+
+### 3. Boto3 with Python
+
+> 공식 사이트 https://boto3.amazonaws.com/v1/documentation/api/latest/index.html
+
+공식 사이트를 참고하면 사용법이 나와있다.
+
+#### boto3.resource와 boto3.client 차이
+
+> 한글 blog https://planbs.tistory.com/entry/boto3resource%EC%99%80-boto3client%EC%9D%98-%EC%B0%A8%EC%9D%B4
+>
+> stackoverflow https://stackoverflow.com/questions/42809096/difference-in-boto3-between-resource-client-and-session
+
+##### Client
+
+```python
+import boto3
+
+BUCKET_NAME = 'board-s3'									#가지고 올 bucket 이름
+client = boto3.client('s3')									#s3를 가지고 옴
+response = client.list_objects(Bucket=BUCKET_NAME)			#BUCKET_NAME과 이름이 같은 bucket object를 가져옴
+
+for content in response['Contents']:						#response의 contents 불러오기
+    obj_dic = client.get_object(Bucket = BUCKET_NAME, Key = content['Key'])
+    print(content['Key'], obj_dict['LastModified'])
+```
+
+- AWS 서비스 API와 1:1 매핑
+
+- low level 인터페이스
+
+- botocore 수준의 client 공개
+
+  > botocore: AWS CLI와 boto3의 기초가 되는 라이브러리
+
+##### Resource
+
+```python
+import boto3
+
+BUCKET_NAME = 'board-s3'
+s3 = boto3.resource('s3')									#s3를 가지고 옴
+bucket = s3.Bucket(BUCKET_NAME)								#BUCKET_NAME의 bucket 정보 가지고 옴
+
+for obj in bucket.objects.all():							
+    print(obj.key, obj.last_modified)
+```
+
+- 객체지향적 인터페이스
+
+- 식별자와 속성 사용
+
+- 자원 조작 위주
+
+  > 자원에 대해 직관적인 구문
+
+##### 결론
+
+- Client에서 사용되는 함수 중 Resource에서는 매핑이 안되어 있는 것도 있다.
+- Resource가 자원 조작하기에 더 직관적이다.
+
+
+
+#### 내가 가진 S3 Name 불러오기
+
+> test.py
+
+```python
+import boto3
+
+# 자격 증명 별도 명시시 사용
+	# ACCESS_KEY = "..."
+	# SECRET_KEY = "..."
+	# SESSION_TOKEN = "..."
+
+s3 = boto3.resource('s3') 			#s3 resource 불러오기
+for bucket in s3.buckets.all():
+    print(bucket.name)
+```
+
+해당 파일이 존재하는 cmd 창에서 **test.py**를 입력하면 내가 가진 S3 버킷의 Name 결과가 출력된다.
+
+
+
+#### VPC
+
+- vpc 확인하기
+
+```python
+import boto3
+
+ec2 = boto3.client('ec2')
+
+response = ec2.describe_vpcs()
+for vpc in response["Vpcs"]:
+    print(vpc["VpcId"] + " " + vpc["CidrBlock"])
+```
