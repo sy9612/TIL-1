@@ -191,3 +191,4 @@ response = ec2.describe_vpcs()
 for vpc in response["Vpcs"]:
     print(vpc["VpcId"] + " " + vpc["CidrBlock"])
 ```
+
