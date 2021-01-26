@@ -178,17 +178,189 @@ for bucket in s3.buckets.all():
 
 
 
+---
+
+## 각 기능별 코드
+
+- 공통
+
+  ``` python
+  import boto3									#AWS와 연결
+  
+  # excel로 저장
+  from openpyxl import load_workbook
+  from openpyxl import Workbook
+  from openpyxl.styles import PatternFill, Border, Side, Alignment, Protection, Font, Color
+  
+  
+  ec2 = boto3.resource('ec2')
+  client = boto3.client('ec2')
+  ```
+
+  ⚠ 변수 저장이나 print 구문 생략
+
+
+
 #### VPC
 
-- vpc 확인하기
+- vpc
+
+	```python
+	vpcs = ec2.vpcs.all()
+  for vpc in vpcs:
+    	vpc_id = vpc.id								# vpc id
+    	if vpc.tags:
+        	for tags in vpc.tags:					# vpc tags
+            	if tags["Key"] == 'Name':			# tag 이름이 Name 이면
+                	tags["Value"]					# tag의 값을 가져옴
+                
+	  	cidr_block = vpc.cidr_block					# vpc의 cidr block 값
+	```
+
+
+
+- subnet
+
+	```python
+	subnets = ec2.subnets.all()
+	
+	# 대부분의 명령어가 vpc와 비슷
+	subnet_az = subnet.availability_zone			# subnet의 az 가져오기
+	```
+
+
+
+- internet gateway
+
+  ```python
+  igws = ec2.internet_gateways.all()
+  
+# 대부분의 명령어가 vpc와 비슷
+  # for 문을 통해 igws 안으로 들어간 후 igw의 attachments 가져오기
+for attachments in igw.attachements:
+      if attachements["State"] == 'available':
+        igw_vpc_id = attachments["VpcId"]
+  ```
+  
+
+
+
+- Natgateway
+
+  ```python
+  ngws = client.describe_nat_gateway()['NatGateways']
+  
+  if ngws:									# ngw가 있을 때 접근
+      for ngw in ngws:
+          nat_address = ngw['NatGatewayAddresses']		# nat gateway의 address에 접근
+          for nata in nat_address:
+              nat_ip = nata['PublicIp']					# nat gateway의 public ip
+          
+          ngw['NatGatewayId']								# nat gateway의 id
+          ngw['VpcId']									# nat gateway의 vpc id
+          ngw['SubnetId']									# nat gateway의 subnet id
+  ```
+
+
+
+- Routing Table
+
+  ```python
+  rtbs = client.describe_route_tables()['RouteTables']
+  
+  for rtb in rtbs:
+      rtb_id = rtb['RouteTableId']
+      if rtb.get('Associations'):
+          for rtba in rtb['Associations']:
+              if rtba.get('SubnetId'):
+                  rtba['SubnetId']
+                  
+      rtb['VpcId']												# routing table의 vpc id
+      rtb['Routes']												# routing table의 routes
+      
+      for routes in rtb['Routes']:
+          if routes.get('GatewayId')								# .get으로 원하는 내용이 있는 지 찾고
+          	rtb_target = routes['GatewayId']					# [name]으로 저장
+              if routes.get('DestinationPrefixListId')
+              	rtb_dest = routes['DestinationPrefixListId']
+          elif routes.get('NatGatewayId')							# routing table이 향하는 id가 어디인지 찾아준다.
+  ```
+
+  > 궁금한 점은 Routing Table이냐, Route Table이 맞는가 이다. 한국에서는 주로 라우팅 테이블이라고 읽는데, 영어네이밍으로는 Route Table도 많이 본 것 같다. 위키백과를 보니 **Routing Table**이 맞는듯!
+
+
+
+#### EC2 Instance
 
 ```python
-import boto3
-
-ec2 = boto3.client('ec2')
-
-response = ec2.describe_vpcs()
-for vpc in response["Vpcs"]:
-    print(vpc["VpcId"] + " " + vpc["CidrBlock"])
+for instance in ec2.instances.all():			# 모든 인스턴스
+    instance_id = instance.id
 ```
 
+
+
+- instance 태그 식별
+
+	```python
+  for tags in instance.tags:					# 인스턴스의 태그
+      if tags["Key"] == 'Name':				# 이름이 Name인 것 찾기
+          instance_name = tags["Value"]		# 해당하는 태그의 값을 저장
+	```
+
+
+
+- Security Group
+
+  ```python
+  for sgs in instance.security_groups:
+      sgs['GroupName']						# security groups의 이름
+    sgs['GroupId']							# security gorups의 ID
+  ```
+
+  
+
+- 속성
+
+  ```python
+  # 속성 가져오기
+  attributes = client.describe_instance_attribute(
+  	InstanceId = instance.id
+      Attribute = 'blockDeviceMapping'				# 블록 디바이스 매핑
+  )
+  ```
+
+  ```python
+  # 블록 디바이스 속성
+  for attribute in attributes["BlockDeviceMappings"]:
+      attribute['DeviceName']
+      attribute['Ebs']['VolumeId']						# Ebs의 Volum ID 속성
+      volumes = client.describe_volumes(
+      	VolumesIds = [volid]							# Volume Id 저장
+      )
+      for vols in volumes['Volumes']:
+          vols['Size']									# 볼륨 size
+  ```
+
+  
+
+- 그 외 변수 참고
+
+  ```python
+  instance.image_id										# 이미지
+  instance_type = instance.instance_type					# 인스턴스 타입
+  state = instance.state["Name"]							# 상태 이름
+  vpc_id = instance.vpc_id								# 인스턴스의 vpc id
+  subnet_id = instance.subnet_id							# 서브넷의 id
+  private_ipt = instance.private_ip_address				# private ip 주소
+  
+  instance.network_interfaces								# 인스턴스의 네트워크 인터페이스
+  	iface.mac_address									# ⬆의 맥 주소
+  
+  instance.root_device_name								# root device의 이름
+  ```
+
+
+
+
+
+🕹 대부분 비슷하게 변수명을 가지고 간다. 비슷하게 접근하면 원하는 리소스의 정보를 얻을 수 있다. 더욱 자세한건 공식 문서에 나와있겠지만 일단은 이정도로 필요한 정보를 얻어 올 수 있다.
