@@ -33,4 +33,4 @@ print(''.join(left+right[::-1]))
 
 
 # stack과 Queue의 in/out의 시간복잡도는 O(1)
-# list를 통해 append와 pop의 경우 O(n)
+# list를 통해 insert와 pop의 경우 O(n)
