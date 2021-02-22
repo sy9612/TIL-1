@@ -33,5 +33,19 @@
 
    - Target 서버: BluePrint 셋팅값에 따라 생성된 Target 서버
 
-   
+
+
+
+---
+
+
+
+###### TEST Mode
+
+- Migration 솔루션 테스트 -> 소스 시스템이 대상 환경에서 제대로 작동하는 지 확인 :o:
+- CloudEndure 사용자 콘솔 -> 소스 머신이 테스트 되었는지 여부와 테스트 성공 여부를 알려 줌
+
+
+
+###### Cut Over
 
