@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class 점프점프_11060 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int[] arr = new int[N];
+		
+		for (int i = 0; i < N; i++) {
+			arr[i] = sc.nextInt();
+		}
+		
+		int now = 0;
+		int result = 0;
+		
+		while(now < N) {
+			int max = 0;
+			int tmp = 0;
+			for (int i = 1; i <= arr[now]; i++) {
+				if(now+i < N) {
+					result++;
+				}
+				if(max < arr[now+i]) {
+					max = arr[now+i];
+					tmp = now+i;
+				}
+			}
+			now = tmp;
+			result++;
+		}
+		
+		System.out.println(result);
+	}
+}

@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class 점프점프_11060 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int[] dp = new int[N];
+		int[] arr = new int[N];
+		
+		dp[0] = sc.nextInt();
+		for (int i = 1; i < N; i++) {
+			int num = sc.nextInt();
+			
+			
+		}
+		
+		
+	}
+}

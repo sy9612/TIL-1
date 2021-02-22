@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class 숫자고르기_2668 {
+	static boolean check[];
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int[] arr = new int[N + 1];
+		for (int i = 1; i <= N; i++) {
+			arr[i] = sc.nextInt();
+		}
+
+		check = new boolean[N+1];
+		int max = 0;
+		for (int i = 1; i <= arr.length; i++) {
+			if(!check[i])
+				max = Math.max(dfs(arr, i, i, 0), max);
+		}
+		System.out.println(max);
+	}
+
+	private static int dfs(int[] arr, int i, int start, int cnt) {
+		if(i >= arr.length)
+			return cnt;
+		
+		if(start == arr[i])
+			return cnt;
+		
+		if(!check[i])
+			dfs(arr, arr[i], start, cnt+1);
+		
+		return 0;
+		
+		
+
+	}
+
+}
