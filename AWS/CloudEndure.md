@@ -44,8 +44,66 @@
 
 - Migration 솔루션 테스트 -> 소스 시스템이 대상 환경에서 제대로 작동하는 지 확인 :o:
 - CloudEndure 사용자 콘솔 -> 소스 머신이 테스트 되었는지 여부와 테스트 성공 여부를 알려 줌
-
-
+- 머신 생성 후에도 AS-IS 서버로부터 복제 계속 수행
 
 ###### Cut Over
 
+- 머신 생성과 동시에 AS-IS 서버 복제 중단
+
+---
+
+# Windows CloudEndure Migration
+
+사이트: https://migration-register.cloudendure.com/
+
+1. Project 생성
+
+![image-20210223100146246](.\image\image-20210223100146246.png)
+
+
+
+2. AWS Credentials 연결
+   - AWS IAM Access Key 입력
+
+![image-20210223100715433](.\image\image-20210223100715433.png)
+
+
+
+3. Replactions 설정
+
+- On-Demand: 고객이 소프트웨어나 하드웨어를 소유하지 않는 솔루션. 소프트웨어 사용 비용 지불
+- On-Premise: 사용자가 직접 설치하고 유지 관리하는 소프트웨어 솔루션. 소프트웨어와 하드웨어 소유
+
+![image-20210223112308555](.\image\image-20210223112308555.png)
+
+
+
+
+
+4. Agent & Token
+
+![image-20210223101603693](.\image\image-20210223101603693.png)
+
+- Source가 되는 Windows Server에 Agent 설치
+
+  (cmd) exe 파일이 존재하는 폴더 위치에서 명령어 붙여넣기 > 실행
+
+
+
+
+5. Replication 서버 생성 & Blueprint 설정
+
+- Blueprint
+
+  타겟 머신 생성을 위한 기본 설정
+
+![image-20210223174421157](.\image\image-20210223174421157.png)
+
+- 오른쪽의 블루프린트 설정으로 AWS EC2에 만들어질 환경 설정
+- Sandbox(폐쇄망) 환경에서 정상 부팅 테스트
+
+
+
+
+
+이후 TestMode / Cut Over 진행

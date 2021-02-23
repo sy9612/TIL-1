@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+public class 사회망서비스_2533 {
+	static int[] snsc;
+	private static int[][] sns;
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+
+		sns = new int[N + 1][N + 1];
+		snsc = new int[N + 1];
+
+		for (int i = 0; i < N - 1; i++) {
+			int a = sc.nextInt();
+			int b = sc.nextInt();
+
+			sns[a][b] = 1;
+			sns[b][a] = 1;
+		}
+
+		dfs(1, 1);
+		
+		int a=0, b = 0;
+		for (int i = 1; i < snsc.length; i++) {
+			if(snsc[i] == 1)
+				a++;
+			else
+				b++;
+		}
+		
+		System.out.println(Math.min(a, b));
+
+	}
+
+	private static void dfs(int st, int stc) {
+		snsc[st] = stc;
+		// TODO Auto-generated method stub
+		for (int i = 1; i < snsc.length; i++) {
+			if(sns[st][i] == 1) {
+				if(stc == 1)
+					dfs(i, 1);
+				else
+					dfs(i, 2);
+			}
+		}
+	}
+
+}
