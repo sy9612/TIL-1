@@ -106,4 +106,4 @@
 
 
 
-이후 TestMode / Cut Over 진행
+이후 TestMode / Cut Over 진행하면된다.
