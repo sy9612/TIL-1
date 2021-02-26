@@ -28,12 +28,19 @@ public class 사회망서비스_2533 {
 		}
 
 		// 1 = A, 2 = AX
-		dfs(1);
+		dfs(1, -1);
 		
 	}
 
-	private static void dfs(int st) {
+	private static void dfs(int st, int pt) {
+		snsc[st][0] = 1;
+		snsc[st][1] = 2;
 		
+  		for (int i = 0; i < sns[st].size(); i++) {
+  			if(snsc[sns[st].get(i)][0] != 0) {
+  				
+  			}
+		}
 	}
 
 }

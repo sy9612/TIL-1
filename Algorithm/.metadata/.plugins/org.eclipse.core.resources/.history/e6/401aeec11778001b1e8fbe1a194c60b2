@@ -1,0 +1,7 @@
+
+public class 회장뽑기_2660 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+	}
+}
