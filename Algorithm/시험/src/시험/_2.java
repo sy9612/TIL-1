@@ -1,4 +1,4 @@
-package 네이버파이낸셜;
+package 시험;
 
 public class _2 {
 	public static void main(String[] args) {
