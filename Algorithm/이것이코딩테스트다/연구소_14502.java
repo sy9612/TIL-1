@@ -1,4 +1,4 @@
-package python;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,24 +55,27 @@ public class 연구소_14502 {
 					if(map[i][j] == 2) {
 						
 						int[][] map2 = new int[N][M];
+
+						Queue<Node> q = new LinkedList<>();
+						boolean[][] check = new boolean[N][M];
 						
 						for (int j2 = 0; j2 < N; j2++) {
 							for (int k = 0; k < M; k++) {
 								map2[j2][k] = map[j2][k];
+								if(map2[j2][k] == 2) {
+
+									q.add(new Node(j2,k));
+									check[j2][k] = true;
+								}
 							}
 						}
 						
-						for (int k = 0; k < map2.length; k++) {
-							System.out.println(Arrays.toString(map2[k]));
-						}
-						System.out.println();
+//						for (int k = 0; k < map2.length; k++) {
+//							System.out.println(Arrays.toString(map2[k]));
+//						}
+//						System.out.println();
 						
 						//bfs 시작
-						Queue<Node> q = new LinkedList<>();
-						boolean[][] check = new boolean[N][M];
-						
-						q.add(new Node(i,j));
-						check[i][j] = true;
 						
 						while(!q.isEmpty()) {
 							Node buf = q.poll();
@@ -98,12 +101,12 @@ public class 연구소_14502 {
 							}
 						}
 						
-						for (int k = 0; k < map2.length; k++) {
-							System.out.println(Arrays.toString(map2[k]));
-						}
-						System.out.println("-----");
-						
-						
+//						for (int k = 0; k < map2.length; k++) {
+//							System.out.println(Arrays.toString(map2[k]));
+//						}
+//						System.out.println("-----");
+////						
+////						
 						max = Math.max(max, rst);
 					}
 				}
