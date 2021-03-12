@@ -1,7 +1,0 @@
-
-public class 좋은날싫은날_17211 {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-	}
-}

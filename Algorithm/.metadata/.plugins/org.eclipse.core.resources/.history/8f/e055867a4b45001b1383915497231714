@@ -1,7 +1,0 @@
-
-public class 이항계수3_11401 {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-	}
-}
