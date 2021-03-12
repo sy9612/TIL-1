@@ -1,5 +1,0 @@
-INDEX VERSION 1.131+C:\Users\kimjaewook\OneDrive\TIL\Algorithm\.metadata\.plugins\org.eclipse.jdt.core
-2808185601.index
-73253526.index
-553703449.index
-3608566751.index
