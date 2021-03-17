@@ -1,493 +1,478 @@
-사실상 이번 파트는 aws나 terraform보다는 좀 더 범용적이다.
-
-linux (centos)에서 apache 및 tomcat, mysql을 통해 3 tier를 구성하는 것이다.
-
- 
-
-
-
-## 환경
-
-
-
-\- Xshell7
-
-\- Amazon linux (centOS)
-
- 
-
- 
-
-
-
-## Xshell로 Bastion 접속하기
-
-
-
-
-
-![img](https://blog.kakaocdn.net/dn/bUD2b4/btqZSwmFok1/L2DnnBMng4qWXpKHLsVEzk/img.png)Bastion의 공인 IP를 이용하면 된다.
-
-![img](https://blog.kakaocdn.net/dn/c1nBqT/btqZUW6kE6g/6zop5dYkKnPJHfW11v3T3k/img.png)
-
-![img](https://blog.kakaocdn.net/dn/bNICqD/btqZTUOkOwr/KksOE991MOUYkdhvt3PLk0/img.png)bastion 접속을 위해 등록했던 key를 가져온다. 현재는 test를 위해 모두 같은 key로 통일
-
-![img](https://blog.kakaocdn.net/dn/XWGl8/btqZTVT25yJ/KiOkI03sI1pCvnIOL34Y90/img.png)암호는 비워둔 채로 확인을 클릭한다.
-
-![img](https://blog.kakaocdn.net/dn/k3swo/btqZSuWJ1NV/37mSlYEfykmVr5xnE36y8k/img.png)베스천 접속 완료
-
-
-
- 
-
- 
-
-
-
-## Bastion에 key.pem 등록 및 private 서버에 접속하기
-
-Bastion에서 private 서버에 접속하기 위해 Xshell에 ip와 port를 이용해 터널링 후, 새 세션으로 접속 할 수 있지만
-
-좀 더 간단하게 접속하기 위해 key 파일을 bastion 내부에 저장하였다.
-
-[byounghee.tistory.com/70](https://byounghee.tistory.com/70)
-
-[ Xshell을 이용하여 Windows에서 Linux로 파일 전송 방법Xshell을 이용하여 Windows에서 Linux로 파일 전송 방법 1. 아래 명령어를 이용하여 lrzsz를 설치한다. $ sudo yum -y install lrzsz [실행결과\] 2. 설치가 완료 되었으면, 리눅스로 옮길 파일 들을 Xshe..byounghee.tistory.com](https://byounghee.tistory.com/70)
-
-
-
-해당 작업 이후 key 파일을 bastion에 옮기게 되면 key파일을 bastion에서 확인 할 수 있다.
-
-
-
-![img](https://blog.kakaocdn.net/dn/cowrnV/btqZV6HmFsX/lC5wJaoqdaLPB8q2mQdkWK/img.png)
-
-
-
- 
-
-이후 private 서버에 접속하기 ssh 명령어로 접속한다.
-
-```
-ssh -i test.pem ec2-user@10.0.x.x
-```
-
- 
-
-그러나 저 상태에서 바로 접속을 하려 하면
-
-
-
-![img](https://blog.kakaocdn.net/dn/bxTRol/btqZZxjUvP4/8yYa4YTqmGOpkw0h2g14vk/img.png)
-
-
-
-Permission denied (publickey, gssapi-keyex, gssapi-with-mic). 이러한 경고문구를 볼 수 있다. 권한이 없다.
-
-당황하지 말고 해당 키가 존재하는 위치에서 밑의 명령어를 통해 test.pem에 permisstion을 준다.
-
-```
-chmod 400 test.pem
-```
-
- 
-
-이후에 다시 ssh 명령어를 통해 접속을 하게 되면 원하는 private 영역에 접근 할 수 있다.
-
- 
-
- 
-
-
-
-## Web - Apache 컴파일 설치
-
-
-
-[blanche-star.tistory.com/entry/CentOS-7-APM-%EC%84%A4%EC%B9%98-Apache-%EC%84%A4%EC%B9%98%EC%BB%B4%ED%8C%8C%EC%9D%BC%EC%84%A4%EC%B9%98%EC%9E%91%EC%84%B1%EC%A4%91](https://blanche-star.tistory.com/entry/CentOS-7-APM-설치-Apache-설치컴파일설치작성중)
-
-[ CentOS 7 APM 설치 - Apache2.4.38 설치(컴파일설치)순서는 다음과같습니다. openssl 업데이트 → mysql설치 → apache설치 → php설치 사용버전정리 centOS 7 openssl pcre apache apr apr-util mysql php 1810 1.1.1b 8.43 2.4.38 1.6.5 1.6.1 8.0.15 7.3.3 아파치..blanche-star.tistory.com](https://blanche-star.tistory.com/entry/CentOS-7-APM-설치-Apache-설치컴파일설치작성중)
-
-[blog.naver.com/PostView.nhn?blogId=hanajava&logNo=221830527084&categoryNo=0&parentCategoryNo=40&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postList](http://blog.naver.com/PostView.nhn?blogId=hanajava&logNo=221830527084&categoryNo=0&parentCategoryNo=40&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postList)
-
-[ [hana\] CentOS 7 Apache 2.4.x 컴파일 설치[서버 환경]OS : CentOS 7.5 64bit CPU : Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz...blog.naver.com](http://blog.naver.com/PostView.nhn?blogId=hanajava&logNo=221830527084&categoryNo=0&parentCategoryNo=40&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postList)
-
-Apache를 설치하는 2가지 방법이 있다.
-
-\1. yum 설치
-
-\2. 컴파일 설치
-
-yum 설치가 좀 더 간단하지만, 컴파일로 apache 설치를 진행한다.
-
-
-
-### 사전 진행
-
-먼저, **sudo -i**로 root 계정으로 접속하도록 한다. root가 아니면 실행되지 않는 명령어가 많다.
-
-이후 yum update 및 패키지 설정으로 apache 컴파일 다운로드를 위한 세팅을 진행한다.
-
-```
-yum -y update
-yum -y install gcc-c++
-yum -y install zlib-devel
-yum -y install openssl-devel
-yum -y install expat-devel
-yum groupinstall 'Development Tools'
-```
-
- 
-
- 
-
-**apache 파일 다운로드**
-
-컴파일 설치는 apache 사이트에서 직접 zip 파일을 가져오는 것이다.
-
-이후, 해당 링크에서 Source에 있는 tar.gz 파일의 링크를 복사해 wget 명령어로 다운로드를 진행한다.
-
-https://httpd.apache.org/download.cgi
-
-[ Download - The Apache HTTP Server ProjectDownloading the Apache HTTP Server Use the links below to download the Apache HTTP Server from one of our mirrors. You must verify the integrity of the downloaded files using signatures downloaded from our main distribution directory. The signatures can behttpd.apache.org](https://httpd.apache.org/download.cgi)
-
-
-
-![img](https://blog.kakaocdn.net/dn/ZmUgw/btqZWOfuauI/ku1kuCpKTbTXQT24QhCXQk/img.png)
-
-
-
-```
-wget https://downloads.apache.org//httpd/httpd-2.4.46.tar.gz
-```
-
-ls로 파일 확인 후 gzip으로 압축파일을 풀어준다.
-
-```
-tar xvf httpd-2.4.46
-```
-
-\- 위 tar.bz2로 wget된 파일은 z옵션을 제거해야 한다. tar xvfz를 하게되면 gzip: stdin: not in gzip format 에러가 발생한다.
-
- 
-
-\2. apr & apr-util 다운로드
-
-[apr.apache.org/download.cgi](https://apr.apache.org/download.cgi)
-
-[ Download - The Apache Portable Runtime ProjectThe currently selected mirror is https://downloads.apache.org/. If you encounter a problem with this mirror, please select another mirror. If all mirrors are failing, there are backup mirrors (at the end of the mirrors list) that should be available. You mapr.apache.org](https://apr.apache.org/download.cgi)
-
-
-
-![img](https://blog.kakaocdn.net/dn/OfkWV/btqZTUA01Oh/w76TPBzO1llM3vR0emGZIk/img.png)이왕이면 tar.gz를 다운받자
-
-
-
-```
-wget https://downloads.apache.org//apr/apr-1.7.0.tar.gz
-wget https://apr.apache.org/download.cgi
-```
-
-위가 apr, 밑이 apr-util이다.
-
-이후 마찬가지로 압축 풀기 진행
-
-```
-tar xvfz apr~
-```
-
-
-
-![img](https://blog.kakaocdn.net/dn/b3AljK/btqZUVNglet/Rsm7suzsWS5fpe95WGz4S1/img.png)압축 풀기 완료
-
-
-
- 
-
-**pcre 다운로드 및 설치**
-
-Perl Compatible Regular Expressions, 정규 표현식을 지원하는 라이브러리
-
-```
-wget https://sourceforge.net/projects/pcre/files/pcre/8.43/pcre-8.43.tar.gz/download -O pcre-8.43.tar.gz
-```
-
-tar로 압축해제를 진행한 후 설치를 진행한다.
-
-```
-cd pcre-8.43
-./configure
-make
-make install
-```
-
- 
-
- 
-
-**apr과 apr-util을 httpd 폴더 안으로 이동하기**
-
-```
-mv apr-1.7.0 httpd-2.4.46/srclib/apr
-mv apr-util-1.6.1 httpd-2.4.46/srclib/apr-util
-```
-
-**apache 설치**
-
-```
-cd httpd-2.4.46
-
-./configure --prefix=/usr/local/apache --enable-so --enable-ssl=shared --with-ssl=/usr/local/ssl --enable-rewrite
-
-make
-
-make install
-```
-
-/usr/local/apache가 저장 폴더가 된다.
-
-**서비스 등록 (파일수정) - 이건 안해도 되는 듯 싶다.**
-
-```
-vi /usr/lib/systemd/system/httpd.service
-```
-
-
-
-[Unit]
-
-Description=The Apache HTTP Server
-
- 
-
-[Service]
-
-Type=forking
-
-PIDFile=/usr/local/apache/logs/httpd.pid
-
-ExecStart=/usr/local/apache/bin/apachectl start
-
-ExecReload=/usr/local/apache/bin/apachectl graceful
-
-ExecStop=/usr/local/apache/bin/apachectl stop
-
-KillSignal=SIGCONT
-
-PrivateTmp=true
-
- 
-
-[Install]
-
-WantedBy=multi-user.target
-
- 
-
-**Apache 실행**
-
-```
-systemctl httpd start
-```
-
-
-
-그런데 여기서 에러가 걸렸다.
-
-*Unknown operation 'httpd'*
-
-\> 해당 에러를 잡기위해 많은 것을 해봤지만 못찾았었는데, pcre를 다운받고 다시 차근차근 시작했다.
-
- 
-
-apache 실행에는 여러 명령어가 있는데, systemctl이 잘 되지 않으면
-
- 
-
-```
-/usr/local/apache2/bin/httpd -k start
-```
-
-설치한 루트로 가서 직접 실행
-
- 
-
-```
-service httpd start
-```
-
-service 명령어로 실행하는 방법이 있다.
-
- 
-
-**Apache 실행 확인**
-
-
-
-![img](https://blog.kakaocdn.net/dn/CaY1s/btqZ2bajlK8/JgoZln56ZZCCQ7dkvRgqyk/img.png)아직 설정을 하나만 했다.
-
-
-
-apache가 정상적으로 실행이 됐다면, 조금 기다린 후에 타겟 그룹을 확인하면 healthy로 바뀌어 있는 것을 볼 수 있다.
-
-ALB는 도메인을 가지고 있기 때문에, ALB의 도메인으로 접속하면 healthy로 되어 있는 서버에 로드밸런스를 해준다.
-
-
-
-![img](https://blog.kakaocdn.net/dn/bbihau/btqZZxFEv7O/pGk3GHoPkIzCEKDQa8dNE0/img.png)
-
-
-
-아무런 html을 하지 않았으면 위와 같은 문구가 ALB의 링크에 나타나게 된다.
-
-그리고 위와 같은 방법을 2에도 실행해주면된다.
-
-또다시 설치를 진행하고 싶지 않다면 ami를 떠서 ec2를 새로 생성해주면 된다.
-
- 
-
- 
-
-
-
-## Was - EBS에 Tomcat 컴파일 설치
-
-
-
-Tomcat을 원하는 위치에 설치하기 위해 컴파일로 설치를 진행한다.
-
-Tomcat을 root가 아닌 새로운 EBS에 설치한다.
-
- 
-
-
-
-### 사전 진행
-
-
-
-일단 yum -y update를 통해 yum을 update를 해준다.
-
-먼저, EC2에서 추가한 EBS를 사용하기위해 등록을 진행한다.
-
-```
-lsblk
-```
-
-![img](https://blog.kakaocdn.net/dn/8faOJ/btqZ4AtTruk/eKkQWlXsC0IFQdrc9qs7hk/img.png)
-
-lsblk 명령어를 통해 현재 ec2에 연결된 disk를 확인할 수 있다. xvda는 root disk이다.
-
-우리가 사용할 disk는 xvdb인데, 아직 등록이 안되어 있다.
-
- 
-
-**Mount 진행**
-
-[docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/ebs-using-volumes.html](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/ebs-using-volumes.html)
-
-[ Amazon EBS 볼륨을 Linux에서 사용할 수 있도록 만들기 - Amazon Elastic Compute Cloud(볼륨을 다른 인스턴스로 옮긴 후 등의 상황에서) 이 볼륨을 연결하지 않고 인스턴스를 부팅했다면, nofail 탑재 옵션을 이용해 볼륨 탑재 시 오류가 있더라도 인스턴스를 부팅할 수 있습니다. 16.0docs.aws.amazon.com](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/ebs-using-volumes.html)
-
-**- 에러 (mount 전 실행)**
-
-> mount: /test: wrong fs type, bad option, bad superblock on /dev/xvdb, missing codepage or helper program, or other error.
-
-타입에 대한 확인이 필요하다.
-
-[unix.stackexchange.com/questions/315063/mount-wrong-fs-type-bad-option-bad-superblock](https://unix.stackexchange.com/questions/315063/mount-wrong-fs-type-bad-option-bad-superblock)
-
-```
-mkfs.ext4 /dev/xvdb
-```
-
-등록을 해주면 등록 완료된다.
-
-```
-mkdir terra
-mount /dev/xvdb	/terra
-```
-
-mount할 폴더를 생성하고, mount 명령어를 통해 disk와 폴더를 mount한다.
-
-재부팅 후에도 마운트를 유지하기위해 fstab에 해당 경로를 등록해줘야 한다.
-
-```
-blkid
-```
-
-해당 명령어로 disk의 UUID를 알아낸다.
-
-```
-vim /etc/fstab
-```
-
-vi 또는 vim 편집기로 /etc/fstab에 UUID와 파일 경로를 등록하면은 완료된다.
-
-![img](https://blog.kakaocdn.net/dn/cjRYDQ/btqZ3gi4Gpr/oaEPRkKwXlgS0uZMB59Xjk/img.png)
-
-unmount 후 다시 mount를 진행하면 완료된다.
-
-```
-mount -a
-```
-
-혹시 모르니 mount -a를 통해 다시 등록해준다.
-
-이후 작업 위치를 cd로 움직여 /root/terra에서 Tomcat 컴파일을 진행한다.
-
- 
-
-**Tomcat**
-
-[downloads.apache.org/tomcat/tomcat-9/v9.0.44/bin/](https://downloads.apache.org/tomcat/tomcat-9/v9.0.44/bin/)
-
-[ Index of /tomcat/tomcat-9/v9.0.44/bin downloads.apache.org](https://downloads.apache.org/tomcat/tomcat-9/v9.0.44/bin/)
-
-```
-wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.44/bin/apache-tomcat-9.0.44.tar.gz
-tar xzf apache-tomcat-9.0.44.tar.gz
-chown -R ec2-user:ec2-user apache-tomcat-9.0.44
-```
-
-해당 사이트에서 wget을 통해 tomcat 폴더를 받아온 후, 압축 해제 및 소유자 변경을 진행한다.
-
-
-
-![img](https://blog.kakaocdn.net/dn/cpu6jP/btqZ1aDthoX/SCgWwCQB3TmGeSlzeOw5q1/img.png)
-
-
-
-그러면 terra 폴더에 이와 같이 apache 폴더가 생기게 된다.
-
-```
-cd apache-tomcat-9.0.44/bin
-./startup.sh
-```
-
-해당 폴더로 움직여서 startup shell을 실행시키면 tomcat을 실행할 수 있다.
-
- 
-
-**Tomcat 실행 확인**
-
-```
-ps -ef | grep tomcat
-curl http://localhost:8080
-```
-
-두 개의 명령어로 확인할 수 있는 데, curl 명령어를 통해 index.html이 잘 받아오면 성공이다.
-
-이후 apache와 마찬가지로 로드밸런서에서 타겟 그룹이 healthy가 되어있는 지 확인한다.
-
- 
-
-이후 apache, tomcat 연동 및 DB 연동은 (4)에서 이어진다.
-
-근데 apache가 잘 안되는데,,이유가 뭘까?
-
 **관련글**
 
-[2021.03.11 - [IT/AWS\] - [Terraform] Windows에서 terraform 구성하기 - 네트워크 (1)](https://honeywater97.tistory.com/87)
+[2021.03.12 - [IT/AWS\] - [3T] AWS 3 tier Architecture 구성하기 - Windows Terraform 서버 (2)](https://honeywater97.tistory.com/88)
 
-[2021.03.12 - [IT/AWS\] - [Terraform] Windows에서 terraform 구성하기 - 서버 (2)](https://honeywater97.tistory.com/88)
+[2021.03.15 - [IT/AWS\] - [3T] AWS 3 tier Architecture 구성하기 - Linux Apache & Tomcat 설치 (3)](https://honeywater97.tistory.com/90)
 
+## 환경 및 배경
+
+
+
+\- Windows 10 CMD
+
+\- Terraform
+
+\- AWS
+
+\- WEB, WAS, DB로 이루어진 3 tier Architecture 구성
+
+\- 네이밍룰: terra-리소스-영역-az
+ex) terra-subnet-pub-a
+
+ 
+
+ 
+
+
+
+## Terraform 다운로드
+
+
+
+https://www.terraform.io/downloads.html
+
+[ Download Terraform - Terraform by HashiCorpDownload Terraformwww.terraform.io](https://www.terraform.io/downloads.html)
+
+\- 알맞는 Windows 파일 다운로드
+
+\- zip 파일 풀기 > terraform.exe 파일 위치를 환경변수 등록
+
+
+
+![img](https://blog.kakaocdn.net/dn/dJq1KO/btqZPGuznnk/WKocS63ckUZs92IyntKsH0/img.png)
+
+![img](https://blog.kakaocdn.net/dn/oSZoc/btqZMnWA7zU/QXvPcmHnpEQzH1gkUavtB0/img.png)
+
+![img](https://blog.kakaocdn.net/dn/DZnM4/btqZJ6OObxF/4e4cMpuRysYZIKY4Kg6Rrk/img.png)terraform.exe가 존재하는 위치에 환경 변수 등록
+
+
+
+ 
+
+ 
+
+
+
+## Terraform 확인 및 init
+
+이후 명령어는 모두 CMD 창에서 진행
+
+ 
+
+**- Terraform 설치 확인**
+
+```
+terraform
+```
+
+
+
+![img](https://blog.kakaocdn.net/dn/luZcw/btqZLsDScw6/0ES5ovsMyyZk2XkzdooEXk/img.png)
+
+
+
+
+
+ 
+
+**- terraform init**
+
+해당 명령어를 실행하기 전, 먼저 AWS 계정과 연결해야 한다.
+
+AWS Console에서 [계정이름] -> [내 보안 자격 증명] -> [액세스 키] -> [새 엑세스 키 만들기]
+
+
+
+![img](https://blog.kakaocdn.net/dn/bFXjHe/btqZRrDWyxu/XVlKQbojvanSeKl0jjcQ71/img.png)해당 액세스 키는 유출되지 않도록 조심
+
+
+
+ 
+
+이 액세스 키를 만든 다음 받은 ID와 PW로 **provider.tf** 파일을 **테라폼 코드를 저장할 폴더 위치**에 생성한다.
+테라폼은 기본적으로 폴더 단위로 명령어를 인식하기 때문에, 폴더를 나누는 것이 중요하다.
+
+```
+provider "aws" {
+    access_key = "액세스키"
+    secret_key = "액세스키 비밀번호"
+    region = "ap-northeast-2"	# 지역을 서울로 선택
+}
+```
+
+ 
+
+이후 cmd 창에서 해당 폴더 위치에 **terraform init** 명령어를 주면
+
+```
+terraform init
+```
+
+
+
+![img](https://blog.kakaocdn.net/dn/kx1bx/btqZOsjxlvp/2zVNGqy5rR0mEyQAFlIwW1/img.png)
+
+
+
+테라폼을 실행할 준비가 완료되었다.
+
+ 
+
+
+
+## AWS 3 tier Architecture
+
+
+
+
+
+![img](https://blog.kakaocdn.net/dn/eD9rBH/btqZP25LSxP/y59KMtKF7ZquZFTKEkaruk/img.jpg)
+
+
+
+
+
+출처 [medium.com/the-andela-way/designing-a-three-tier-architecture-in-aws-e5c24671f124](https://medium.com/the-andela-way/designing-a-three-tier-architecture-in-aws-e5c24671f124)
+
+[ Designing a Three-Tier Architecture in AWSA three-tier architecture is a software architecture pattern where the application is broken down into three logical tiers: the…medium.com](https://medium.com/the-andela-way/designing-a-three-tier-architecture-in-aws-e5c24671f124)
+
+ 
+
+가장 기본적인 3 tier 구성도 사진이다. 따라서, 해당 그림을 기반으로 만들 예정이다.
+
+단, subnet은 8개로 구성된다. (public 2개, pirvate-was 2개, private-web 2개, private-db 2개)
+
+\- VPC
+
+\- Subnet
+
+\- Integer Gateway
+
+\- Nat Gateway
+
+\- Route Table
+
+\- Load Balancer
+
+\- EC2
+
+ 
+
++) 추가
+
+
+
+![img](https://blog.kakaocdn.net/dn/Vkz17/btqZMoa0Hjl/60U06iFjn0ZzKiMEysDVv0/img.png)https://pearlluck.tistory.com/78
+
+
+
+\- 영역 및 IP 참조
+
+ 
+
+ 
+
+## Terraform AWS VPC
+
+
+
+가장 먼저 만들어야 되는 서비스이다. vpc로 서비스를 올릴 영역을 만들어줘야 AWS가 가능하다.
+
+```
+resource "aws_vpc" "terra-vpc"{
+    cidr_block = "10.0.0.0/16"
+
+    tags = {
+        Name = "terra-vpc"
+    }
+}
+```
+
+\- cidr_block은 10.0.0.0/16으로 잡아줬다.
+
+\- 많은 블로그에서 vpc 생성 시 여러 옵션을 넣어주는데, 굳이 테스트에는 큰 필요가 없는 것 같아서 뺐다.
+
+```
+	# VPC에 DNS 옵션 설정
+enable_dns_hostnames = true
+enable_dns_support = true
+
+	# 인스턴스 전용 하드웨어 옵션
+instance_tenancy = "default" 
+```
+
+ 
+
+ 
+
+
+
+## Terraform AWS Gateway
+
+
+
+**Integer Gateway**
+
+vpc 다음에는 internet gateway를 설정해서, vpc가 인터넷으로 통할 수 있도록 통로를 뚫어줘야 한다.
+
+```
+resource "aws_internet_gateway" "terra-igw"{
+    vpc_id = aws_vpc.terra-vpc.id
+    tags = {
+        Name = "terra-igw"
+    }
+}
+```
+
+\- 만들어 둔 vpc에 igw가 연결되면 되므로 vpc_id를 이전에 만들어 둔 vpc의 name으로 지정해준다.
+
+ 
+
+**Nat Gateway**
+
+```
+resource "aws_eip" "terra-nip"{
+    vpc = true
+    tags = {
+        Name = "terra-nip"
+    }
+}
+
+resource "aws_nat_gateway" "terra-ngw"{
+    allocation_id = aws_eip.terra-nip.id
+    subnet_id   = aws_subnet.terra-sub-pub-a.id
+    tags = {
+        Name = "terra-ngw"
+    }
+}
+```
+
+\- vpc를 true로 둔 후 먼저 nat gateway를 생성한다.
+
+\- public a 영역에 nat gateway를 넣어준다.
+
+ 
+
+ 
+
+
+
+## Terraform AWS Subnet
+
+
+
+총 8개의 subnet을 설정한다.
+
+ 
+
+**Public Subnet**
+
+```
+# public
+resource "aws_subnet" "terra-sub-pub-a"{
+    vpc_id  = aws_vpc.terra-vpc.id
+    cidr_block  = "10.0.1.0/24"
+    availability_zone = "ap-northeast-2a"
+    # public ip를 할당하기 위해 true로 설정
+    map_public_ip_on_launch = true
+
+    tags = {
+        Name = "terra-sub-pub-a"
+    }
+
+}
+resource "aws_subnet" "terra-sub-pub-c"{
+    vpc_id  = aws_vpc.terra-vpc.id
+    cidr_block  = "10.0.2.0/24"
+    availability_zone = "ap-northeast-2c"
+    map_public_ip_on_launch = true
+
+    tags = {
+        Name = "terra-sub-pub-c"
+    }
+
+}
+```
+
+\- public은 bastion을 올려야 하기 때문에 public ip를 붙여야 하기 때문에 자동으로 public ip가 할당되도록 옵션을 지정해준다.
+
+\- 이중화를 위해 각각 a와 c 대역에 subnet을 지정했다.
+
+ 
+
+**Private Subnet**
+
+```
+# private web
+resource "aws_subnet" "terra-sub-pri-a-web"{
+    vpc_id  = aws_vpc.terra-vpc.id
+    cidr_block  = "10.0.10.0/24"
+    availability_zone = "ap-northeast-2a"
+
+    tags = {
+        Name = "terra-sub-pri-a-web"
+    }
+
+}
+resource "aws_subnet" "terra-sub-pri-c-web"{
+    vpc_id  = aws_vpc.terra-vpc.id
+    cidr_block  = "10.0.20.0/24"
+    availability_zone = "ap-northeast-2c"
+
+    tags = {
+        Name = "terra-sub-pri-c-web"
+    }
+
+}
+```
+
+\- private subnet이므로 map_public_ip_on_launch 옵션을 제거했다. default가 false값이다.
+
+\- 이후 각각 대역에 맞춰서 cidr_block 설정 후 subnet을 만든다.
+
+\- web 2개, was 2개, db 2개
+
+ 
+
+ 
+
+
+
+## Terraform AWS Route Table
+
+
+
+Route Table은 내가(igw, ngw, etc) 무엇을 향해 갈지(subnet) 설정해 주는 역할을 한다.
+
+ 
+
+먼저, Routing table을 만들고, 무엇을 향해 갈 것인지 route를 잡아준다.
+
+2가지 방법으로 route table을 만들어 줬는데, 둘 다 사용 가능하다.
+
+```
+# public > igw
+resource "aws_route_table" "terra-rt-pub" {
+    vpc_id = aws_vpc.terra-vpc.id
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = aws_internet_gateway.terra-igw.id
+    }
+    tags = {
+        Name = "terra-rt-pub"
+    }
+}
+
+# public subnet을 public route table에 연결
+resource "aws_route_table_association" "terra-rtass-pub-a"{
+    subnet_id = aws_subnet.terra-sub-pub-a.id
+    route_table_id = aws_route_table.terra-rt-pub.id
+}
+
+resource "aws_route_table_association" "terra-rtass-pub-c"{
+    subnet_id = aws_subnet.terra-sub-pub-c.id
+    route_table_id = aws_route_table.terra-rt-pub.id
+}
+```
+
+\- public 영역의 route table을 설정한다. route table을 생성하면서 사용할 igw도 선언했다.
+
+\- internet gateway는 0.0.0.0/0 (모두 open)으로 향한다.
+
+\- association을 통해 public subnet을 public route table에 연결한다.
+
+ 
+
+```
+# private web > nat
+resource "aws_route_table" "terra-rt-pri-web"{
+    vpc_id = aws_vpc.terra-vpc.id
+    
+    tags = {
+       Name = "terra-rt-pri-web"
+   }
+}
+
+resource "aws_route" "terra-r-pri-web"{
+    route_table_id = aws_route_table.terra-rt-pri-web.id
+    destination_cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.terra-ngw.id
+}
+
+# private web subnet을 pirvate route table에 연결
+resource "aws_route_table_association" "terra-rtass-pri-a-web"{
+    subnet_id = aws_subnet.terra-sub-pri-a-web.id
+    route_table_id = aws_route_table.terra-rt-pri-web.id
+}
+
+resource "aws_route_table_association" "terra-rtass-pri-c-web"{
+    subnet_id = aws_subnet.terra-sub-pri-c-web.id
+    route_table_id = aws_route_table.terra-rt-pri-web.id
+}
+```
+
+\- private 영역의 route table을 선언한다. 선언 후 nat와 연결하기위해 aws_route resource를 사용했다.
+
+\- 각각 web, was, db의 route table을 모두 분리했다. 따라서 private web subnet만 연결
+
+ 
+
+ 
+
+
+
+## Terraform paln & apply
+
+
+
+Terraform plan으로 바뀌는 것을 확인한 후, apply를 진행한다.
+
+
+
+![img](https://blog.kakaocdn.net/dn/DgERz/btqZP3KZEn5/45kEqTzY9WrnJTwO82KvdK/img.png)현재 폴더에 존재하는 테라폼 파일
+
+
+
+ 
+
+```
+terraform plan
+```
+
+
+
+![img](https://blog.kakaocdn.net/dn/CDRzm/btqZOsdohyq/e3hy77Sjk8q9ZNkqFRWFqk/img.png)
+
+
+
+paln을 돌리게 되면 이처럼 변화하는 것과 개수가 나타나게 된다.
+
+항상 apply 전에 해서 확인하는 것을 잊지 말자
+
+ 
+
+```
+terrafom apply
+```
+
+
+
+![img](https://blog.kakaocdn.net/dn/slBIw/btqZQI7ClNE/upSS6XRRqFoWTOI0Hqx5Ek/img.png)
+
+
+
+terraform apply를 하게 되면 중간에 이와 같이 바꿀 것인지 value를 치는 것이 나온다.
+
+yes를 치면 terraform으로 resource를 생성하기 시작한다.
+
+plan에서 통과가 된다고 하더라도 apply를 막상 시작하면 안 만들어지는 경우도 많다. 그런 경우 오류사항을 알려주니 수정을 하면 된다.
+
+
+
+![img](https://blog.kakaocdn.net/dn/P63k2/btqZP1M8HNY/6MUdWpssCi2rJ3GGFUMWr1/img.png)성공. 26개인 이유는 이전에 테스트한거랑 이름이 겹쳐서 1개 만들고 다시 돌렸기 때문이다.
+
+
+
+ 
+
+ec2 instance 생성과 sg, lb는 (2)에서 이어진다.
