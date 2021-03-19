@@ -1,41 +1,47 @@
 package 백준;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class 구간합구하기5_11660 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Scanner sc = new Scanner(System.in);
-		
-		int N = sc.nextInt();
-		int M = sc.nextInt();
-		
-		int[][] arr = new int[N+1][N+1];
-		int[] sum = new int[N*M+1];
-		
-		
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		String[] str = br.readLine().split(" ");
+
+		int N = Integer.parseInt(str[0]);
+		int M = Integer.parseInt(str[1]);
+
+		int[][] sum = new int[N + 1][N + 1];
+
 		for (int i = 1; i <= N; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 			for (int j = 1; j <= N; j++) {
-				int a = sc.nextInt();
-				arr[i][j] = arr[i][j-1] + a;
-				sum[N*i + j] = sum[N*i + j -1] + a;
+				int a = Integer.parseInt(st.nextToken());
+
+				sum[i][j] = sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1] + a;
 			}
+
 		}
-		
+
 		for (int m = 0; m < M; m++) {
-			int i = sc.nextInt();
-			int j = sc.nextInt();
-			int x = sc.nextInt();
-			int y = sc.nextInt();
-			
+			StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+			int i = Integer.parseInt(st.nextToken());
+			int j = Integer.parseInt(st.nextToken());
+			int x = Integer.parseInt(st.nextToken());
+			int y = Integer.parseInt(st.nextToken());
+
 			int rs = 0;
-			
-			rs = sum[N*x + y] - sum[N*i + j -1];
-			
-			for (int k = 0; k <= x-i; k++) {
-				
-			}
-			
-			
+
+			rs = sum[x][y] - sum[i - 1][y] - sum[x][j - 1] + sum[i - 1][j - 1];
+
 			System.out.println(rs);
 		}
 	}
