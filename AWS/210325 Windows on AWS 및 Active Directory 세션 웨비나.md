@@ -22,17 +22,17 @@
 
   - 하는 일
 
-    ![image-20210325142159864](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325142159864.png)
+    ![image-20210325142159864](image/image-20210325142159864.png)
 
   - AD 관련 서비스
 
-    ![image-20210325142448814](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325142448814.png)
+    ![image-20210325142448814](image/image-20210325142448814.png)
 
   - 3가지 설치 방법 존재(windows, powershell, aws)
 
   - 논리적인 구성 요소 - Multi Master
 
-    ![image-20210325143044083](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325143044083.png)
+    ![image-20210325143044083](image/image-20210325143044083.png)
 
     - AWS AD: AZ 별로 도메인이 생성됨
     - Global Catalog Server
@@ -53,15 +53,15 @@
 
 - AD 도메인 용어
 
-  ![image-20210325143723992](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325143723992.png)
+  ![image-20210325143723992](image/image-20210325143723992.png)
 
-  ![image-20210325143916919](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325143916919.png)
+  ![image-20210325143916919](image/image-20210325143916919.png)
 
   
 
 - 트러스트 모델
 
-  ![image-20210325144040497](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325144040497.png)
+  ![image-20210325144040497](image/image-20210325144040497.png)
 
   다른 방법에 비해 네트워크 포트를 적게 요구함
 
@@ -73,7 +73,7 @@
 
   - Managed AD
 
-    ![image-20210325145311362](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325145311362.png)
+    ![image-20210325145311362](image/image-20210325145311362.png)
 
     완전관리형 AD
 
@@ -83,11 +83,11 @@
 
   - Cloud ONLY - Single
 
-    ![image-20210325145725581](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325145725581.png)
+    ![image-20210325145725581](image/image-20210325145725581.png)
 
     기존 AD를 AWS EC2로 확장
 
-![image-20210325150008551](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325150008551.png)
+![image-20210325150008551](image/image-20210325150008551.png)
 
 
 
@@ -95,7 +95,7 @@
 
   AD 도메인에 조인하는 클라이언트들은 AD Domain의 IP 주소를 가지도록 구성 -> AD에서 도메인 Controller를 잘 찾을 수 있음
 
-  ![image-20210325150219723](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325150219723.png)
+  ![image-20210325150219723](image/image-20210325150219723.png)
 
   - Self Managed AD 사용
 
@@ -103,13 +103,13 @@
 
   DNS 방향에 정방향/역방향이 잘 세팅이 되어있어야 함
 
-![image-20210325150423068](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325150423068.png)
+![image-20210325150423068](image/image-20210325150423068.png)
 
-![image-20210325150553675](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325150553675.png)
+![image-20210325150553675](image/image-20210325150553675.png)
 
 
 
-![image-20210325150711618](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325150711618.png)
+![image-20210325150711618](image/image-20210325150711618.png)
 
 하단의 인스턴스는 위의 라우터로 감
 
@@ -121,15 +121,17 @@
 
 
 
-![image-20210325150843756](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325150843756.png)
+![image-20210325150843756](image/image-20210325150843756.png)
 
-![image-20210325150940379](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325150940379.png)
+![image-20210325150940379](image/image-20210325150940379.png)
 
-![image-20210325151017311](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325151017311.png)
+![image-20210325151017311](image/image-20210325151017311.png)
 
 - 위 문제 해결
 
-![image-20210325151132981](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325151132981.png)
+![image-20210325151132981](image/image-20210325151132981.png)
 
-![image-20210325151208023](C:\Users\jihong.kim\AppData\Roaming\Typora\typora-user-images\image-20210325151208023.png)
+![image-20210325151208023](image/image-20210325151208023-1616659849923.png)
+
+
 
