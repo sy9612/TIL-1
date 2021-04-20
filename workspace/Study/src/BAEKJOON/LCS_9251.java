@@ -11,6 +11,8 @@ public class LCS_9251 {
 		String s2 = br.readLine();
 		
 		
+		int[] dp = new int[s1.length()];
+		
 		for (int i = 0; i < s1.length(); i++) {
 			for (int j = 0; j < s2.length(); j++) {
 				
