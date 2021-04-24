@@ -11,12 +11,20 @@ public class LCS_9251 {
 		String s2 = br.readLine();
 		
 		
-		int[] dp = new int[s1.length()];
-		
-		for (int i = 0; i < s1.length(); i++) {
-			for (int j = 0; j < s2.length(); j++) {
+		int[][] dp = new int[s1.length()+1][s2.length()+1];
+		int max = 0;
+		for (int i = 1; i <= s1.length(); i++) {
+			for (int j = 1; j <= s2.length(); j++) {
+				if(s1.charAt(i-1) == s2.charAt(j-1)) {
+					dp[i][j] = dp[i-1][j-1] + 1;
+				}
+				else
+					dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
 				
+				max = Math.max(dp[i][j], max);
 			}
 		}
+		
+		System.out.println(max);
 	}
 }
