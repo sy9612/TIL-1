@@ -1,3 +1,8 @@
+---
+typora-root-url: ..\image
+typora-copy-images-to: ..\image
+---
+
 # Java
 
 https://asfirstalways.tistory.com/158
@@ -49,7 +54,7 @@ Object-Oriented Programming
 5. 해석된 바이트코드는 **Runtime Data Areas**에 배치되어 실질적인 수행이 이루어짐
    - JVM은 필요에 따라 Thread Synchronization과 같은 GC 관리 작업 수행
 
-![image-20210425025457072](C:\Users\15com\AppData\Roaming\Typora\typora-user-images\image-20210425025457072.png)
+![image-20210427003429497](/image-20210427003429497-1619451350681.png)
 
 - Class Loader
 
@@ -90,13 +95,17 @@ Object-Oriented Programming
 
 #### Garbage Collector
 
-GC를 수행하는 모듈 (쓰레드) 존재
+GC를 수행하는 모듈 (쓰레드) 존재 (뒤에 자세히 후술)
 
-##### Runtime Data Area
+
+
+
+
+## Runtime Data Area
 
 프로그램을 수행하기 위해 OS에서 할당받은 메모리 공간
 
-![image-20210425030639393](C:\Users\15com\AppData\Roaming\Typora\typora-user-images\image-20210425030639393.png)
+![image-20210427003345102](C:\Users\kimjaewook\OneDrive\Study\TIL\image\image-20210427003345102.png)
 
 - PC Register
 
@@ -151,7 +160,6 @@ GC를 수행하는 모듈 (쓰레드) 존재
 >- Type Information
 >
 >    class 인지 interface인지의 여부 저장 / Type의 속성, 전체 이름, super class의 전체 이름(interface, object 제외)
-> 
 
 - **Heap**
 
@@ -161,7 +169,7 @@ GC를 수행하는 모듈 (쓰레드) 존재
 
   class area 영역에 올라온 클래스들만 객체로 생성
 
-![image-20210425033016992](C:\Users\15com\AppData\Roaming\Typora\typora-user-images\image-20210425033016992.png)
+![image-20210427003300089](C:\Users\kimjaewook\OneDrive\Study\TIL\image\image-20210427003300089.png)
 
 > - Permanent Generation
 >
@@ -206,3 +214,9 @@ GC를 수행하는 모듈 (쓰레드) 존재
   - HashSet
   - LinkedHashSet: 순서 보장
 - Stack / Queue
+
+
+
+
+
+# GC
