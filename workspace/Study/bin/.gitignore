@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-/연습장/
-=======
->>>>>>> f0b33d970cfd12ecae2a0ad1b8df29e60a2f88d0
 /BAEKJOON/
 /HackerRank/
 /Jungol/
@@ -26,3 +22,6 @@
 /이코테파이썬/
 /프로그래머스/
 /현차test/
+/.classpath
+/.project
+/bin/
