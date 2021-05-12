@@ -234,6 +234,68 @@ TCP 소켓이 연결 과정 중 총 세번의 대화를 주고 받음
 
 
 
+### HTTP Method
+
+클라이언트와 서버 사이에 이루어지는 요청과 응답 데이터를 전송하는 방식
+
+- OPTIONS: curl을 이용해 OPTIONS 요청을 서버에 보냄으로써 서버에서 지원하는 method 확인, 목적 리소스 통신 설정
+
+  **타겟 서버의 지원 가능한 Method를 알아봄**
+
+- GET: 특정 리소스의 표시 요청. 오직 데이터를 받음, **서버에게 Resource를 보내도록 요청하는데 사용, 서버의 Resource를 읽음**
+
+- HEAD: GET 메서드와 동일한 응답 요구. 응답 본문을 포함하지 않음 **서버에서 Body를 Return하지 않음**
+
+  > Resource를 받지 않고 오직 찾기만 원할 때
+  >
+  > Object가 존재할 경우 응답 상태 코드 확인
+  >
+  > 서버 응답 헤더 -> Resource 수정 확인
+  >
+  > 
+  >
+  > ![img](https://miro.medium.com/max/418/1*-R9pF0Hf13WUFVfFIMz8YA.jpeg)
+
+- POST: 특정 리소스에 엔티티 제출 할 때 사용. 서버 상태의 변화 **서버에서 Input Data를 보내기 위함**
+
+  > 서버에 DATA를 보내는 용도
+  >
+  > ![img](https://miro.medium.com/max/482/1*Rkb0kk5Ox1AOpGZH16fTKA.jpeg)
+
+- PUT: 목적 리소스 모든 현재 표시를 요청 payload로 변경 **서버에 문서를 쓸 때 사용**
+
+  > 서버가 Clinet 요청의 Body 확인
+  >
+  > 요청된 URL에 정의된 새로운 Resource 생성
+  >
+  > ![img](https://miro.medium.com/max/481/1*J5gbefuo4GJNaOGefscDAA.jpeg)
+  >
+  > 서버의 Resource에 Data를 저장하는 용도
+
+- DELETE: 요청 리소스 삭제
+
+  > 항상 보장되지 않음
+  >
+  > HTTP 규격에는 Client 요청에도 서버 무효화
+
+- CONNECT: 목적 리소스로 식별되는 서버로의 터널을 연결
+
+- TRACE: 목적 리소스의 경로에 따라 메시지 loop-back 테스트 **서버에 도달했을 때 최종 패킷의 Request Packet을 봄**
+
+  > 클라이언트로부터 Request Packet이 방화벽, Proxy Server, Gateway등을 거치면서 packet 변조가 만들어 질 수 있음 -> 서버 도달 시 패킷을 엿봄
+  >
+  > Original Data와 서버에 도달했을 때 비교본 DATA를 서버의 응답 Body를 통해 확인
+  >
+  > 요청의 최종 수신자는 반드시 송신자에게 200 응답 Body로 수신한 메시지 반송
+  >
+  > 최초 Client 요청에는 Body 포함X
+  >
+  > ![img](https://miro.medium.com/max/481/1*jK-6lUNXucZN7hoZiXFZZw.jpeg)
+
+- PATH: 리소스의 부분 수정
+
+
+
 ## 주소창에 URL 검색
 
 ![img](../image/99F099375C124B2D02)

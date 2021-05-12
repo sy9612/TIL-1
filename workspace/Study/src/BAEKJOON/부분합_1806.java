@@ -32,6 +32,9 @@ public class 부분합_1806 {
 		int sum = 0;
 		int left = 0, right = 0;
 		
+		/**
+		 * 이진 탐색
+		 */
 		while(left <= right ) {
  			if(sum >= S) {
 				rs = Math.min(rs, right-left);
