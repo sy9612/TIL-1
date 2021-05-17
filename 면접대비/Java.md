@@ -54,7 +54,7 @@ Object-Oriented Programming
 5. 해석된 바이트코드는 **Runtime Data Areas**에 배치되어 실질적인 수행이 이루어짐
    - JVM은 필요에 따라 Thread Synchronization과 같은 GC 관리 작업 수행
 
-![image-20210427003429497](/image-20210427003429497-1619451350681.png)
+![image-20210427003429497](../image/image-20210427003429497-1619451350681.png)
 
 - Class Loader
 
@@ -105,7 +105,7 @@ GC를 수행하는 모듈 (쓰레드) 존재 (뒤에 자세히 후술)
 
 프로그램을 수행하기 위해 OS에서 할당받은 메모리 공간
 
-![image-20210427003345102](C:\Users\kimjaewook\OneDrive\Study\TIL\image\image-20210427003345102.png)
+![image-20210427003345102](..\image\image-20210427003345102.png)
 
 - PC Register
 
@@ -169,7 +169,7 @@ GC를 수행하는 모듈 (쓰레드) 존재 (뒤에 자세히 후술)
 
   class area 영역에 올라온 클래스들만 객체로 생성
 
-![image-20210427003300089](C:\Users\kimjaewook\OneDrive\Study\TIL\image\image-20210427003300089.png)
+![image-20210427003300089](..\image\image-20210427003300089.png)
 
 > - Permanent Generation
 >
@@ -218,5 +218,3 @@ GC를 수행하는 모듈 (쓰레드) 존재 (뒤에 자세히 후술)
 
 
 
-
-# GC
