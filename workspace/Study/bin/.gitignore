@@ -1,3 +1,5 @@
+/.classpath
+/.project
 /BAEKJOON/
 /HackerRank/
 /Jungol/
@@ -5,6 +7,7 @@
 /LineTest/
 /NBP/
 /Programmers/
+/bin/
 /coupang/
 /devmatching/
 /kakao_2020/
@@ -22,6 +25,3 @@
 /이코테파이썬/
 /프로그래머스/
 /현차test/
-/.classpath
-/.project
-/bin/
