@@ -206,6 +206,7 @@ GC를 수행하는 모듈 (쓰레드) 존재 (뒤에 자세히 후술)
 
 - List
   - ArrayList
+   - 검색으 용이 but 삽입, 삭제는 불편  
   - LinkedList
 - Map
   - HashMap
